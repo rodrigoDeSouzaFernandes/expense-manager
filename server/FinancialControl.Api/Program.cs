@@ -1,7 +1,13 @@
+using FinancialControl.Api.Db;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<FinancialContext>(options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 

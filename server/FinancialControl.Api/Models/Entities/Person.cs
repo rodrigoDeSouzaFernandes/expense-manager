@@ -1,3 +1,5 @@
+namespace FinancialControl.Models.Entities;
+
 public class Person
 {
     public Guid Id { get; set; }
