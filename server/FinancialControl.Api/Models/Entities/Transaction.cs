@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace FinancialControl.Models.Entities;
 
 public class Transaction
@@ -11,12 +13,11 @@ public class Transaction
 
     public TransactionType Type { get; set; }
 
-    public Guid UserId { get; set; }
-    public User User { get; set; } = null!;
-
+    [ForeignKey("Person")]
     public Guid PersonId { get; set; }
     public Person Person { get; set; } = null!;
 
+    [ForeignKey("Category")]
     public Guid CategoryId { get; set; }
     public Category Category { get; set; } = null!;
 }

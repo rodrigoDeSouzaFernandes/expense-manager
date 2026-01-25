@@ -36,12 +36,7 @@ namespace FinancialControl.Api.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Categories");
                 });
@@ -57,12 +52,7 @@ namespace FinancialControl.Api.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("People");
                 });
@@ -92,71 +82,13 @@ namespace FinancialControl.Api.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("PersonId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Transactions");
-                });
-
-            modelBuilder.Entity("FinancialControl.Models.Entities.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("FinancialControl.Models.Entities.Category", b =>
-                {
-                    b.HasOne("FinancialControl.Models.Entities.User", "User")
-                        .WithMany("Categories")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("FinancialControl.Models.Entities.Person", b =>
-                {
-                    b.HasOne("FinancialControl.Models.Entities.User", "User")
-                        .WithMany("People")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FinancialControl.Models.Entities.Transaction", b =>
@@ -173,17 +105,9 @@ namespace FinancialControl.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FinancialControl.Models.Entities.User", "User")
-                        .WithMany("Transactions")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Category");
 
                     b.Navigation("Person");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FinancialControl.Models.Entities.Category", b =>
@@ -193,15 +117,6 @@ namespace FinancialControl.Api.Migrations
 
             modelBuilder.Entity("FinancialControl.Models.Entities.Person", b =>
                 {
-                    b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("FinancialControl.Models.Entities.User", b =>
-                {
-                    b.Navigation("Categories");
-
-                    b.Navigation("People");
-
                     b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
