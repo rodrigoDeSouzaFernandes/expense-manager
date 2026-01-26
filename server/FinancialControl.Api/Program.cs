@@ -17,7 +17,9 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<FinancialContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<IFinancialContext, FinancialContext>(options =>
+    options.UseSqlServer(connectionString)
+);
 
 var app = builder.Build();
 

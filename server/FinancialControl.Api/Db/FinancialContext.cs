@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FinancialControl.Api.Db;
 
-public class FinancialContext : DbContext
+public class FinancialContext : DbContext, IFinancialContext
 {
     public FinancialContext(DbContextOptions<FinancialContext> options)
         : base(options) { }
