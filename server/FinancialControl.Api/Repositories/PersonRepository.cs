@@ -34,7 +34,7 @@ public class PersonRepository : IPersonRepository
 
     public async Task<IEnumerable<Person>> GetAllAsync()
     {
-        return await _context.People.ToListAsync();
+        return await _context.People.Include(p => p.Transactions).ToListAsync();
     }
 
     public async Task<bool> DeleteAsync(Guid id)

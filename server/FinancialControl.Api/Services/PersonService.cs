@@ -28,41 +28,33 @@ public class PersonService : IPersonService
         return dto;
     }
 
-    public async Task<PersonResponseDto> UpdatePersonAsync(Guid id, string name, int age)
-    {
-        var person = await _personRepository.GetByIdAsync(id);
-        if (person == null)
-        {
-            throw new KeyNotFoundException("Person not found");
-        }
-
-        person.Name = name;
-        var updatedPerson = await _personRepository.UpdateAsync(person);
-
-        PersonResponseDto dto = new PersonResponseDto
-        {
-            Id = updatedPerson.Id,
-            Name = updatedPerson.Name,
-            Age = updatedPerson.Age,
-        };
-
-        return dto;
-    }
-
     public async Task<Person?> GetPersonByIdAsync(Guid id)
     {
         return await _personRepository.GetByIdAsync(id);
     }
 
-    public async Task<IEnumerable<PersonResponseDto>> GetAllPeopleAsync()
+    public async Task<IEnumerable<PersonWithBalanceDto>> GetAllPeopleAsync()
     {
         var people = await _personRepository.GetAllAsync();
 
-        return people.Select(p => new PersonResponseDto
+        return people.Select(p =>
         {
-            Id = p.Id,
-            Name = p.Name,
-            Age = p.Age,
+            decimal totalIncome = p
+                .Transactions.Where(t => t.Type == TransactionType.Credit)
+                .Sum(t => t.Amount);
+            decimal totalExpenses = p
+                .Transactions.Where(t => t.Type == TransactionType.Debit)
+                .Sum(t => t.Amount);
+
+            return new PersonWithBalanceDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Age = p.Age,
+                TotalIncome = totalIncome,
+                TotalExpenses = totalExpenses,
+                Balance = totalIncome - totalExpenses,
+            };
         });
     }
 

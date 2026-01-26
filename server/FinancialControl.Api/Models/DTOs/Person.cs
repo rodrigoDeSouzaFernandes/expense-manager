@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using FinancialControl.Api.Models.Entities;
 
 namespace FinancialControl.Api.Models.DTOs;
 
@@ -18,4 +19,16 @@ public class PersonResponseDto
     public Guid Id { get; set; }
     public string Name { get; set; } = "";
     public int Age { get; set; }
+}
+
+public class PersonWithTransactionsResponseDto : PersonResponseDto
+{
+    public List<TransactionResponseDto> Transactions { get; set; } = new();
+}
+
+public class PersonWithBalanceDto : PersonResponseDto
+{
+    public decimal TotalIncome { get; set; }
+    public decimal TotalExpenses { get; set; }
+    public decimal Balance { get; set; }
 }
