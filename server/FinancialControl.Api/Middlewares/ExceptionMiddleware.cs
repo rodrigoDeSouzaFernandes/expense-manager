@@ -1,51 +1,60 @@
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 using FinancialControl.Api.Models.DTOs;
 
-namespace FinancialControl.Api.Middlewares;
-
-public class ExceptionMiddleware
+namespace FinancialControl.Api.Middlewares
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger<ExceptionMiddleware> _logger;
-
-    public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+    public class ExceptionMiddleware
     {
-        _next = next;
-        _logger = logger;
-    }
+        private readonly RequestDelegate _next;
 
-    public async Task InvokeAsync(HttpContext context)
-    {
-        try
+        private const string InternalServerErrorMessage = "Internal server error";
+
+        public ExceptionMiddleware(RequestDelegate next)
         {
-            await _next(context);
+            _next = next;
         }
-        catch (Exception ex)
+
+        public async Task InvokeAsync(HttpContext context)
         {
-            _logger.LogError(ex, ex.Message);
-            await HandleExceptionAsync(context, ex);
+            try
+            {
+                // Passa a requisição para o próximo middleware na pipeline
+                await _next(context);
+            }
+            catch (Exception ex)
+            {
+                // Trata a exceção e retorna uma resposta padronizada
+                await HandleExceptionAsync(context, ex);
+            }
         }
-    }
 
-    private Task HandleExceptionAsync(HttpContext context, Exception ex)
-    {
-        context.Response.ContentType = "application/json";
-
-        int statusCode = ex switch
+        private Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
-            KeyNotFoundException => StatusCodes.Status404NotFound,
-            ValidationException => StatusCodes.Status400BadRequest,
-            UnauthorizedAccessException => StatusCodes.Status401Unauthorized,
-            _ => StatusCodes.Status500InternalServerError,
-        };
+            context.Response.ContentType = "application/json";
 
-        context.Response.StatusCode = statusCode;
+            // Define o status code baseado no tipo da exceção
+            int statusCode = ex switch
+            {
+                KeyNotFoundException => (int)HttpStatusCode.NotFound, // 404
+                ValidationException => (int)HttpStatusCode.BadRequest, // 400
+                UnauthorizedAccessException => (int)HttpStatusCode.Unauthorized, // 401
+                _ => (int)HttpStatusCode.InternalServerError, // 500
+            };
 
-        var response = new ErrorResponse
-        {
-            Message = statusCode == 500 ? "Internal server error" : ex.Message,
-        };
+            context.Response.StatusCode = statusCode;
 
-        return context.Response.WriteAsJsonAsync(response);
+            // Define a mensagem que será retornada
+            var response = new ErrorResponse
+            {
+                Message =
+                    statusCode == (int)HttpStatusCode.InternalServerError
+                        ? InternalServerErrorMessage
+                        : ex.Message,
+            };
+
+            // Serializa e escreve a resposta JSON
+            return context.Response.WriteAsJsonAsync(response);
+        }
     }
 }
