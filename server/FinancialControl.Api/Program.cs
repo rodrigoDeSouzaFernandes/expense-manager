@@ -1,4 +1,5 @@
 using FinancialControl.Api.Db;
+using FinancialControl.Api.Middlewares;
 using FinancialControl.Api.Repositories;
 using FinancialControl.Api.Services;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 

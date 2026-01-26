@@ -34,8 +34,11 @@ public class CategoryService : ICategoryService
         return response;
     }
 
-    public async Task<bool> DeleteCategoryAsync(Guid id)
+    public async Task DeleteCategoryAsync(Guid id)
     {
-        return await _categoryRepository.DeleteAsync(id);
+        var deleted = await _categoryRepository.DeleteAsync(id);
+
+        if (!deleted)
+            throw new KeyNotFoundException("Category not found with the provided ID.");
     }
 }
