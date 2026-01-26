@@ -37,13 +37,15 @@ public class PersonRepository : IPersonRepository
         return await _context.People.ToListAsync();
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(Guid id)
     {
         var person = await GetByIdAsync(id);
         if (person != null)
         {
             _context.People.Remove(person);
             await _context.SaveChangesAsync();
+            return true;
         }
+        return false;
     }
 }

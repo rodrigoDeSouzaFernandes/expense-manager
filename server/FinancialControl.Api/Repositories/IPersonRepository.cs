@@ -8,5 +8,5 @@ public interface IPersonRepository
     Task<Person> UpdateAsync(Person person);
     Task<Person?> GetByIdAsync(Guid id);
     Task<IEnumerable<Person>> GetAllAsync();
-    Task DeleteAsync(Guid id);
+    Task<bool> DeleteAsync(Guid id);
 }
