@@ -4,7 +4,7 @@ using FinancialControl.Api.Repositories;
 
 namespace FinancialControl.Api.Services;
 
-public class TransactionService
+public class TransactionService : ITransactionService
 {
     private readonly ITransactionRepository _transactionRepository;
 

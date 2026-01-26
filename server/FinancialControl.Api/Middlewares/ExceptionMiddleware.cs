@@ -48,9 +48,7 @@ namespace FinancialControl.Api.Middlewares
             var response = new ErrorResponse
             {
                 Message =
-                    statusCode == (int)HttpStatusCode.InternalServerError
-                        ? InternalServerErrorMessage
-                        : ex.Message,
+                    statusCode == (int)HttpStatusCode.InternalServerError ? ex.Message : ex.Message,
             };
 
             // Serializa e escreve a resposta JSON
