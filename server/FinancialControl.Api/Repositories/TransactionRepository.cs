@@ -15,7 +15,10 @@ public class TransactionRepository : ITransactionRepository
 
     public async Task<List<Transaction>> GetTransactionsAsync()
     {
-        List<Transaction> transactions = await _context.Transactions.ToListAsync();
+        List<Transaction> transactions = await _context
+            .Transactions.Include(t => t.Person)
+            .Include(t => t.Category)
+            .ToListAsync();
         return transactions;
     }
 
@@ -26,8 +29,23 @@ public class TransactionRepository : ITransactionRepository
         return transaction;
     }
 
-    public async Task<Transaction?> GetByIdAsync(int id)
+    public async Task<Transaction?> GetTransactionByIdAsync(Guid id)
     {
-        return await _context.Transactions.FindAsync(id);
+        return await _context
+            .Transactions.Include(t => t.Person)
+            .Include(t => t.Category)
+            .FirstOrDefaultAsync(t => t.Id == id);
+    }
+
+    public async Task<bool> DeleteAsync(Guid id)
+    {
+        var transaction = await GetTransactionByIdAsync(id);
+        if (transaction != null)
+        {
+            _context.Transactions.Remove(transaction);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        return false;
     }
 }
