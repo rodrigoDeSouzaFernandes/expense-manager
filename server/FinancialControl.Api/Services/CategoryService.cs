@@ -1,4 +1,4 @@
-
+using FinancialControl.Api.Models.DTOs;
 using FinancialControl.Api.Models.Entities;
 using FinancialControl.Api.Repositories;
 
@@ -13,8 +13,10 @@ public class CategoryService : ICategoryService
         _categoryRepository = categoryRepository;
     }
 
-    public async Task<Category> CreateCategoryAsync(Category category)
+    public async Task<Category> CreateCategoryAsync(CategoryRequestDto categoryDto)
     {
+        var category = new Category { Name = categoryDto.Name, Type = categoryDto.Type };
+
         return await _categoryRepository.AddAsync(category);
     }
 

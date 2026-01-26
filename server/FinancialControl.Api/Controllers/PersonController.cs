@@ -19,7 +19,7 @@ public class PersonController : ControllerBase
     public async Task<IActionResult> CreatePerson([FromBody] PersonRequestDto request)
     {
         var person = await _personService.CreatePersonAsync(request.Name, request.Age);
-        return Ok(person);
+        return CreatedAtAction(nameof(GetPersonById), new { id = person.Id }, person);
     }
 
     [HttpGet]

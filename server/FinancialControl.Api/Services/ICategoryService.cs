@@ -1,10 +1,11 @@
+using FinancialControl.Api.Models.DTOs;
 using FinancialControl.Api.Models.Entities;
 
 namespace FinancialControl.Api.Services;
 
 public interface ICategoryService
 {
-    Task<Category> CreateCategoryAsync(Category category);
+    Task<Category> CreateCategoryAsync(CategoryRequestDto category);
     Task<List<Category>> GetAllCategoriesAsync();
     Task<bool> DeleteCategoryAsync(Guid id);
 }
