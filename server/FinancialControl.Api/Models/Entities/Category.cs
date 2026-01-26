@@ -1,4 +1,4 @@
-namespace FinancialControl.Models.Entities;
+namespace FinancialControl.Api.Models.Entities;
 
 public class Category
 {

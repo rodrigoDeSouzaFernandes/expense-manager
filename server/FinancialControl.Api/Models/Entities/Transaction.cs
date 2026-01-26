@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FinancialControl.Models.Entities;
+namespace FinancialControl.Api.Models.Entities;
 
 public class Transaction
 {

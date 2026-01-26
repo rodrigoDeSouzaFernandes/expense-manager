@@ -1,4 +1,4 @@
-using FinancialControl.Models.Entities;
+using FinancialControl.Api.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinancialControl.Api.Db;
@@ -20,6 +20,7 @@ public class FinancialContext : DbContext
         {
             entity.HasKey(p => p.Id);
             entity.Property(p => p.Name).IsRequired().HasMaxLength(100);
+            entity.Property(p => p.Age).IsRequired();
         });
 
         modelBuilder.Entity<Category>(entity =>

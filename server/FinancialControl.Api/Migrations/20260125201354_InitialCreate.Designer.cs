@@ -25,7 +25,7 @@ namespace FinancialControl.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("FinancialControl.Models.Entities.Category", b =>
+            modelBuilder.Entity("FinancialControl.Api.Models.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,7 +44,7 @@ namespace FinancialControl.Api.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("FinancialControl.Models.Entities.Person", b =>
+            modelBuilder.Entity("FinancialControl.Api.Models.Entities.Person", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -60,7 +60,7 @@ namespace FinancialControl.Api.Migrations
                     b.ToTable("People");
                 });
 
-            modelBuilder.Entity("FinancialControl.Models.Entities.Transaction", b =>
+            modelBuilder.Entity("FinancialControl.Api.Models.Entities.Transaction", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,15 +94,15 @@ namespace FinancialControl.Api.Migrations
                     b.ToTable("Transactions");
                 });
 
-            modelBuilder.Entity("FinancialControl.Models.Entities.Transaction", b =>
+            modelBuilder.Entity("FinancialControl.Api.Models.Entities.Transaction", b =>
                 {
-                    b.HasOne("FinancialControl.Models.Entities.Category", "Category")
+                    b.HasOne("FinancialControl.Api.Models.Entities.Category", "Category")
                         .WithMany("Transactions")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FinancialControl.Models.Entities.Person", "Person")
+                    b.HasOne("FinancialControl.Api.Models.Entities.Person", "Person")
                         .WithMany("Transactions")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -113,12 +113,12 @@ namespace FinancialControl.Api.Migrations
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("FinancialControl.Models.Entities.Category", b =>
+            modelBuilder.Entity("FinancialControl.Api.Models.Entities.Category", b =>
                 {
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("FinancialControl.Models.Entities.Person", b =>
+            modelBuilder.Entity("FinancialControl.Api.Models.Entities.Person", b =>
                 {
                     b.Navigation("Transactions");
                 });
