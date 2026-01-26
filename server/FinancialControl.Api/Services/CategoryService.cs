@@ -20,9 +20,18 @@ public class CategoryService : ICategoryService
         return await _categoryRepository.AddAsync(category);
     }
 
-    public async Task<List<Category>> GetAllCategoriesAsync()
+    public async Task<List<CategoryResponseDto>> GetAllCategoriesAsync()
     {
-        return await _categoryRepository.GetAllAsync();
+        var categories = await _categoryRepository.GetAllAsync();
+        List<CategoryResponseDto> response = categories
+            .Select(c => new CategoryResponseDto
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Type = c.Type,
+            })
+            .ToList();
+        return response;
     }
 
     public async Task<bool> DeleteCategoryAsync(Guid id)
