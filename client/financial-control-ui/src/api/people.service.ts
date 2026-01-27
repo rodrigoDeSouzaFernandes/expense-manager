@@ -8,26 +8,24 @@ import {
 } from "@/features/people/types";
 
 export const getAllPeople = async (): Promise<PersonWithBalance[]> => {
-  const response = await client.get<PersonWithBalance[]>("/api/people");
+  const response = await client.get<PersonWithBalance[]>("/person");
   return response.data;
 };
 
 export const createPerson = async (
   person: CreatePersonDTO,
 ): Promise<Person> => {
-  const response = await client.post<Person>("/api/people", person);
+  const response = await client.post<Person>("/person", person);
   return response.data;
 };
 
 export const deletePerson = async (id: string): Promise<void> => {
-  await client.delete(`/api/people/${id}`);
+  await client.delete(`/person/${id}`);
 };
 
 export const getPersonById = async (
   id: string,
 ): Promise<PersonWithTransactions> => {
-  const response = await client.get<PersonWithTransactions>(
-    `/api/people/${id}`,
-  );
+  const response = await client.get<PersonWithTransactions>(`/person/${id}`);
   return response.data;
 };

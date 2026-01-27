@@ -6,6 +6,18 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        "AllowFrontend",
+        policy =>
+        {
+            //Permissão de cors para o frontend.
+            policy.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyMethod();
+        }
+    );
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
@@ -33,6 +45,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowFrontend");
 
 app.UseMiddleware<ExceptionMiddleware>();
 

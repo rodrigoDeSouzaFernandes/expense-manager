@@ -1,3 +1,7 @@
+import { usePeopleListQuery } from "../queries";
+
 export const usePeopleList = () => {
-  return {};
+  const { data: people, isLoading: isPeopleListLoading } = usePeopleListQuery();
+
+  return { people, isPeopleListLoading };
 };

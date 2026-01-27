@@ -51,7 +51,9 @@ const Home = () => {
         sx={{
           flexGrow: 1,
           bgcolor: (theme) =>
-            theme.palette.mode === "light" ? "#f5f5f5" : theme.palette.background.default,
+            theme.palette.mode === "light"
+              ? "#f5f5f5"
+              : theme.palette.background.default,
           minHeight: "100vh",
         }}
       >
@@ -63,4 +65,3 @@ const Home = () => {
 };
 
 export default Home;
-
