@@ -1,4 +1,4 @@
-import { Box, Paper } from "@mui/material";
+import { Box } from "@mui/material";
 import { DataGrid, type GridColDef, type GridRowModel } from "@mui/x-data-grid";
 import { PageHeader } from "../../components/PageHeader";
 import type { PersonRow } from "./types";
@@ -27,20 +27,17 @@ export const PeopleList = () => {
   return (
     <Box>
       <PageHeader title="Pessoas" actionLabel="Cadastrar pessoa" />
-      <Paper>
-        <DataGrid
-          autoHeight
-          autoPageSize
-          rows={gridRows}
-          columns={gridColumns}
-          disableColumnMenu
-          disableColumnResize
-          hideFooter
-          showToolbar
-          disableColumnFilter
-        />
-      </Paper>
+      <DataGrid
+        autoHeight
+        autoPageSize
+        rows={gridRows}
+        columns={gridColumns}
+        disableColumnMenu
+        disableColumnResize
+        hideFooter
+        showToolbar
+        disableColumnFilter
+      />
     </Box>
   );
 };
-
