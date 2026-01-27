@@ -69,11 +69,8 @@ public class TransactionService : ITransactionService
 
         var category = await _categoryRepository.GetByIdAsync(transactionDto.CategoryId);
 
-        // Adicionar regras:
-        // 1 - Caso o usuário informe um menor de idade (menor de 18), apenas despesas deverão ser aceitas.
-        // 2 - restringir a utilização de categorias conforme o valor definido no campo finalidade. Ex.: se o tipo da transação é despesa, não poderá utilizar uma categoria que tenha a finalidade receita.
-        // obter pessoa e categoria, verificar idade e finalidade da categoria, e usar pra montar a response
-        // remover a requisição extra a transação
+        ValidateMinorAgeTransaction(person, transaction);
+        ValidateCategoryTransaction(category, transaction);
 
         await _transactionRepository.AddAsync(transaction);
 
@@ -149,11 +146,13 @@ public class TransactionService : ITransactionService
         }
     }
 
-    private void ValidateMinorAgeTransaction(Person person, Transaction transaction)
+    private void ValidateMinorAgeTransaction(Person? person, Transaction transaction)
     {
         if (person == null)
         {
-            throw new BusinessRuleException("Person not found.");
+            throw new BusinessRuleException(
+                "Person not found. Please verify that the provided ID is correct."
+            );
         }
 
         if (person.Age < 18 && transaction.Type == TransactionType.Credit)
@@ -162,11 +161,13 @@ public class TransactionService : ITransactionService
         }
     }
 
-    private void ValidateCategoryTransaction(Category category, Transaction transaction)
+    private void ValidateCategoryTransaction(Category? category, Transaction transaction)
     {
         if (category == null)
         {
-            throw new BusinessRuleException("Category not found.");
+            throw new BusinessRuleException(
+                "Category not found. Please verify that the provided ID is correct."
+            );
         }
         if (category.Type != CategoryType.Both && (int)category.Type != (int)transaction.Type)
         {

@@ -13,11 +13,18 @@ public class CategoryService : ICategoryService
         _categoryRepository = categoryRepository;
     }
 
-    public async Task<Category> CreateCategoryAsync(CategoryRequestDto categoryDto)
+    public async Task<CategoryResponseDto> CreateCategoryAsync(CategoryRequestDto categoryDto)
     {
         var category = new Category { Name = categoryDto.Name, Type = categoryDto.Type };
 
-        return await _categoryRepository.AddAsync(category);
+        var createdCategory = await _categoryRepository.AddAsync(category);
+
+        return new CategoryResponseDto
+        {
+            Id = createdCategory.Id,
+            Name = createdCategory.Name,
+            Type = createdCategory.Type,
+        };
     }
 
     public async Task<List<CategoryResponseDto>> GetAllCategoriesAsync()

@@ -5,7 +5,7 @@ namespace FinancialControl.Api.Services;
 
 public interface ICategoryService
 {
-    Task<Category> CreateCategoryAsync(CategoryRequestDto category);
+    Task<CategoryResponseDto> CreateCategoryAsync(CategoryRequestDto category);
     Task<List<CategoryResponseDto>> GetAllCategoriesAsync();
     Task DeleteCategoryAsync(Guid id);
 }
