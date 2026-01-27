@@ -1,3 +1,4 @@
+using FinancialControl.Api.Exceptions;
 using FinancialControl.Api.Models.DTOs;
 using FinancialControl.Api.Models.Entities;
 using FinancialControl.Api.Repositories;
@@ -7,10 +8,18 @@ namespace FinancialControl.Api.Services;
 public class TransactionService : ITransactionService
 {
     private readonly ITransactionRepository _transactionRepository;
+    private readonly IPersonRepository _personRepository;
+    private readonly ICategoryRepository _categoryRepository;
 
-    public TransactionService(ITransactionRepository transactionRepository)
+    public TransactionService(
+        ITransactionRepository transactionRepository,
+        IPersonRepository personRepository,
+        ICategoryRepository categoryRepository
+    )
     {
         _transactionRepository = transactionRepository;
+        _personRepository = personRepository;
+        _categoryRepository = categoryRepository;
     }
 
     public async Task<List<TransactionResponseDto>> GetTransactionsAsync()
@@ -55,6 +64,16 @@ public class TransactionService : ITransactionService
             CategoryId = transactionDto.CategoryId,
             Date = DateTime.UtcNow,
         };
+
+        var person = await _personRepository.GetByIdAsync(transactionDto.PersonId);
+
+        var category = await _categoryRepository.GetByIdAsync(transactionDto.CategoryId);
+
+        // Adicionar regras:
+        // 1 - Caso o usuário informe um menor de idade (menor de 18), apenas despesas deverão ser aceitas.
+        // 2 - restringir a utilização de categorias conforme o valor definido no campo finalidade. Ex.: se o tipo da transação é despesa, não poderá utilizar uma categoria que tenha a finalidade receita.
+        // obter pessoa e categoria, verificar idade e finalidade da categoria, e usar pra montar a response
+        // remover a requisição extra a transação
 
         await _transactionRepository.AddAsync(transaction);
 
@@ -127,6 +146,31 @@ public class TransactionService : ITransactionService
         if (!deleted)
         {
             throw new KeyNotFoundException("Transaction not found");
+        }
+    }
+
+    private void ValidateMinorAgeTransaction(Person person, Transaction transaction)
+    {
+        if (person == null)
+        {
+            throw new BusinessRuleException("Person not found.");
+        }
+
+        if (person.Age < 18 && transaction.Type == TransactionType.Credit)
+        {
+            throw new BusinessRuleException("Minor persons cannot have income transactions.");
+        }
+    }
+
+    private void ValidateCategoryTransaction(Category category, Transaction transaction)
+    {
+        if (category == null)
+        {
+            throw new BusinessRuleException("Category not found.");
+        }
+        if (category.Type != CategoryType.Both && (int)category.Type != (int)transaction.Type)
+        {
+            throw new BusinessRuleException("Transaction type does not match category type.");
         }
     }
 }

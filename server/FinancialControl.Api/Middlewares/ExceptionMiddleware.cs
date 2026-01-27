@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net;
+using FinancialControl.Api.Exceptions;
 using FinancialControl.Api.Models.DTOs;
 
 namespace FinancialControl.Api.Middlewares
@@ -38,6 +39,7 @@ namespace FinancialControl.Api.Middlewares
             {
                 KeyNotFoundException => (int)HttpStatusCode.NotFound, // 404
                 ValidationException => (int)HttpStatusCode.BadRequest, // 400
+                BusinessRuleException => (int)HttpStatusCode.BadRequest, // 400
                 UnauthorizedAccessException => (int)HttpStatusCode.Unauthorized, // 401
                 _ => (int)HttpStatusCode.InternalServerError, // 500
             };
@@ -48,7 +50,9 @@ namespace FinancialControl.Api.Middlewares
             var response = new ErrorResponse
             {
                 Message =
-                    statusCode == (int)HttpStatusCode.InternalServerError ? ex.Message : ex.Message,
+                    statusCode == (int)HttpStatusCode.InternalServerError
+                        ? InternalServerErrorMessage
+                        : ex.Message,
             };
 
             // Serializa e escreve a resposta JSON
