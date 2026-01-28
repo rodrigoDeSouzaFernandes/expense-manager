@@ -1,4 +1,4 @@
-import { Box, Toolbar, AppBar, Typography, IconButton } from "@mui/material";
+import { Box, Toolbar } from "@mui/material";
 import PeopleIcon from "@mui/icons-material/People";
 import CategoryIcon from "@mui/icons-material/Category";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
@@ -20,17 +20,15 @@ const Home = () => {
   const [activeTab, setActiveTab] = useState<SidebarTab>("transactions");
   const [mobileOpen, setMobileOpen] = useState(false);
 
-
   const tabs = {
     people: <PeopleList />,
     categories: <CategoryList />,
-    transactions: <TransactionList />
-  }
+    transactions: <TransactionList />,
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
-
-      <Header setMobileOpen={setMobileOpen} />
+      <Header toggleSidebar={() => setMobileOpen((prev) => !prev)} />
       <SidebarNavigation
         items={TABS}
         activeId={activeTab}
@@ -42,7 +40,7 @@ const Home = () => {
       <Box
         component="main"
         sx={{
-          width: '100%',
+          width: "100%",
           bgcolor: (theme) =>
             theme.palette.mode === "light"
               ? "#f5f5f5"
@@ -51,7 +49,9 @@ const Home = () => {
         }}
       >
         <Toolbar />
-        <Box sx={{ p: { xs: 1, sm: 3 }, maxWidth: 1200, mx: "auto" }}>{tabs[activeTab]}</Box>
+        <Box sx={{ p: { xs: 1, sm: 3 }, maxWidth: 1200, mx: "auto" }}>
+          {tabs[activeTab]}
+        </Box>
       </Box>
     </Box>
   );

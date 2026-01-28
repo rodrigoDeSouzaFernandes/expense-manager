@@ -45,9 +45,7 @@ const SidebarNavigation = ({
                   selected={selected}
                   onClick={() => handleItemClick(item.id)}
                 >
-                  {item.icon && (
-                    <ListItemIcon>{item.icon}</ListItemIcon>
-                  )}
+                  {item.icon && <ListItemIcon>{item.icon}</ListItemIcon>}
                   <ListItemText primary={item.label} />
                 </ListItemButton>
               </ListItem>

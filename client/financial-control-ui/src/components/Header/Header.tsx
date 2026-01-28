@@ -4,7 +4,7 @@ import type { HeaderProps } from "./types";
 
 
 const Header = ({
-    setMobileOpen
+    toggleSidebar,
 }: HeaderProps) => {
     return (
         <AppBar
@@ -18,7 +18,7 @@ const Header = ({
                 <IconButton
                     color="inherit"
                     edge="start"
-                    onClick={() => setMobileOpen(true)}
+                    onClick={() => toggleSidebar()}
                     sx={{ mr: 2, display: { md: "none" } }}
                 >
                     <MenuIcon />
