@@ -71,8 +71,9 @@ export const PeopleList = () => {
         <TableSkeleton columns={4} rows={5} />
       ) : (
         <DataGrid
-          autoPageSize
-          rows={people}
+          autoHeight
+          rows={people || []}
+          getRowId={(row) => row.id}
           columns={gridColumns}
           disableColumnMenu
           disableColumnResize

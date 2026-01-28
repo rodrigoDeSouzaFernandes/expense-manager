@@ -17,7 +17,7 @@ const TABS: TabConfig[] = [
 ];
 
 const Home = () => {
-  const [activeTab, setActiveTab] = useState<SidebarTab>("transactions");
+  const [activeTab, setActiveTab] = useState<SidebarTab>("people");
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const tabs = {
