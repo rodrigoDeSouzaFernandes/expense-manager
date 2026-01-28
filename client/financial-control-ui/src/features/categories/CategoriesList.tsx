@@ -1,28 +1,9 @@
 import { Box, IconButton, Paper } from "@mui/material";
 import { PageHeader } from "../../components/PageHeader";
-import type { CategoryRow } from "./types";
-import { DataGrid, type GridColDef, type GridRowModel } from "@mui/x-data-grid";
+import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import { Delete } from "@mui/icons-material";
 import { useCategoriesList } from "./hooks/useCategoriesList";
 import { CategoryTypeMap } from "./CategoryTypeMap";
-
-const gridRows: GridRowModel<CategoryRow>[] = [
-  {
-    id: 1,
-    name: "Salário",
-    type: "Receita",
-  },
-  {
-    id: 2,
-    name: "Alimentação",
-    type: "Despesa",
-  },
-  {
-    id: 3,
-    name: "Transporte",
-    type: "Despesa",
-  },
-];
 
 const gridColumns: GridColDef[] = [
   {

@@ -1,4 +1,6 @@
+import type z from "zod";
 import { categoryType } from "./enums";
+import type { categorySchema } from "./schemas/categorySchema";
 
 export type CategoryRow = {
   id: number;
@@ -6,7 +8,7 @@ export type CategoryRow = {
   type: string;
 };
 
-type CategoryType = (typeof categoryType)[keyof typeof categoryType];
+export type CategoryType = (typeof categoryType)[keyof typeof categoryType];
 
 export interface Category {
   id: string;
@@ -15,3 +17,5 @@ export interface Category {
 }
 
 export type CreateCategoryDTO = Omit<Category, "id">;
+
+export type CategoryFormData = z.infer<typeof categorySchema>;

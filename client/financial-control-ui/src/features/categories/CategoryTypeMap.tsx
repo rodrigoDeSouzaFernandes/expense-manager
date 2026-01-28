@@ -1,21 +1,20 @@
-import { Chip, type SxProps } from "@mui/material";
-
-const chipStyles: SxProps = {
-  height: 28,
-  width: 80,
-
-};
-
-const categoryTypes = {
-  1: <Chip label="Receita" color="success" sx={chipStyles} />,
-  2: <Chip label="Despesa" color="error" sx={chipStyles} />,
-  3: <Chip label="Ambos" color="warning" sx={chipStyles} />,
-};
+import { Chip } from "@mui/material";
+import { CATEGORY_TYPES } from "./enums";
+import type { CategoryType } from "./types";
 
 interface CategoryTypeMapProps {
-  type: keyof typeof categoryTypes;
+  type: CategoryType;
 }
 
 export const CategoryTypeMap = ({ type }: CategoryTypeMapProps) => {
-  return categoryTypes[type];
+  return (
+    <Chip
+      label={CATEGORY_TYPES[type].label}
+      color={CATEGORY_TYPES[type].color}
+      sx={{
+        height: 28,
+        width: 80,
+      }}
+    />
+  );
 };
