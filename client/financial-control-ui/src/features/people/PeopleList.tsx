@@ -6,8 +6,10 @@ import { usePeopleList } from "./hooks/usePeopleList";
 import { Delete } from "@mui/icons-material";
 import TableSkeleton from "@/components/TableSkeleton";
 import { CreatePersonDialog } from "./CreatePersonDialog";
+import DeletePersonDialog from "./DeletePersonDialog";
+import { useMemo } from "react";
 
-const gridColumns: GridColDef[] = [
+const getGridColumns = (onDelete: (person: any) => void): GridColDef[] => [
   {
     field: "name",
     headerName: "Nome",
@@ -43,8 +45,8 @@ const gridColumns: GridColDef[] = [
     width: 65,
     sortable: false,
     filterable: false,
-    renderCell: () => (
-      <IconButton>
+    renderCell: (params) => (
+      <IconButton onClick={() => onDelete(params.row)}>
         <Delete sx={{ "&:hover": { color: "error.main" } }} />
       </IconButton>
     ),
@@ -57,7 +59,17 @@ export const PeopleList = () => {
     isPeopleListLoading,
     createPersonDialogOpen,
     setCreatePersonDialogOpen,
+    deletePersonDialog,
+    setDeletePersonDialog,
+    isDeletionPending,
+    deletePerson,
   } = usePeopleList();
+
+  const columns = useMemo(
+    () =>
+      getGridColumns((person) => setDeletePersonDialog({ open: true, person })),
+    [],
+  );
 
   return (
     <Box>
@@ -74,7 +86,7 @@ export const PeopleList = () => {
           autoHeight
           rows={people || []}
           getRowId={(row) => row.id}
-          columns={gridColumns}
+          columns={columns}
           disableColumnMenu
           disableColumnResize
           hideFooter
@@ -86,6 +98,13 @@ export const PeopleList = () => {
       <CreatePersonDialog
         open={createPersonDialogOpen}
         onClose={() => setCreatePersonDialogOpen(false)}
+      />
+      <DeletePersonDialog
+        open={deletePersonDialog?.open}
+        person={deletePersonDialog?.person}
+        isLoading={isDeletionPending}
+        onClose={() => setDeletePersonDialog({ open: false, person: null })}
+        onDelete={deletePerson}
       />
     </Box>
   );
