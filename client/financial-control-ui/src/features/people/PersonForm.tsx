@@ -1,6 +1,4 @@
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { Controller } from "react-hook-form";
 import {
   Divider,
   TextField,
@@ -8,27 +6,13 @@ import {
   Stack,
   CircularProgress,
 } from "@mui/material";
+import type { PersonFormProps } from "./types";
+import { usePersonForm } from "./hooks/usePersonForm";
 
-const personSchema = z.object({
-  name: z.string().min(1, "Nome é obrigatório"),
-  age: z.number().min(1, "Idade inválida").max(150, "Idade inválida"),
-});
 
-export type PersonFormData = z.infer<typeof personSchema>;
-
-type PersonFormProps = {
-  onSubmit: (data: PersonFormData) => void;
-  onCancel?: () => void;
-  isLoading?: boolean;
-};
 
 const PersonForm = ({ onSubmit, onCancel, isLoading }: PersonFormProps) => {
-  const form = useForm<PersonFormData>({
-    resolver: zodResolver(personSchema),
-    defaultValues: { name: "", age: 0 },
-    mode: "onSubmit",
-    reValidateMode: "onChange",
-  });
+  const { form } = usePersonForm();
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>

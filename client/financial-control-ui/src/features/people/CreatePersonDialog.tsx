@@ -1,11 +1,7 @@
 import { Dialog, DialogTitle, DialogContent } from "@mui/material";
 import PersonForm from "./PersonForm";
 import { useCreatePersonMutation } from "./queries";
-
-type CreatePersonDialogProps = {
-  open: boolean;
-  onClose: () => void;
-};
+import type { CreatePersonDialogProps } from "./types";
 
 export const CreatePersonDialog = ({
   open,
