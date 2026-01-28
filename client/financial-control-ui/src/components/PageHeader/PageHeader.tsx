@@ -11,9 +11,13 @@ const PageHeader = ({
   return (
     <Box
       display="flex"
-      justifyContent="space-between"
-      alignItems="center"
       mb={3}
+      sx={{
+        justifyContent: 'space-between',
+        flexDirection: { xs: "column", sm: "row" },
+        alignItems: { xs: "center", sm: "center" },
+        gap: { xs: 2, sm: 0 },
+      }}
     >
       <Typography variant="h5" fontWeight={600}>
         {title}

@@ -11,5 +11,7 @@ export type SidebarNavigationProps = {
   items: SidebarItem[];
   activeId: string;
   onChange: (id: string) => void;
+  mobileOpen: boolean;
+  onMobileClose: () => void;
 };
 

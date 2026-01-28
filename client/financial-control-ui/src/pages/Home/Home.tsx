@@ -1,4 +1,4 @@
-import { Box, Toolbar, AppBar, Typography } from "@mui/material";
+import { Box, Toolbar, AppBar, Typography, IconButton } from "@mui/material";
 import PeopleIcon from "@mui/icons-material/People";
 import CategoryIcon from "@mui/icons-material/Category";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
@@ -8,6 +8,7 @@ import { CategoryList } from "../../features/categories/CategoryList";
 import { TransactionList } from "../../features/transactions";
 import { SidebarNavigation } from "../../components/SidebarNavigation";
 import type { SidebarTab, TabConfig } from "./types";
+import Header from "@/components/Header";
 
 const TABS: TabConfig[] = [
   { id: "people", label: "Pessoas", icon: <PeopleIcon /> },
@@ -17,39 +18,31 @@ const TABS: TabConfig[] = [
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState<SidebarTab>("transactions");
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  const renderContent = () => {
-    if (activeTab === "people") return <PeopleList />;
-    if (activeTab === "categories") return <CategoryList />;
-    return <TransactionList />;
-  };
+
+  const tabs = {
+    people: <PeopleList />,
+    categories: <CategoryList />,
+    transactions: <TransactionList />
+  }
 
   return (
     <Box sx={{ display: "flex" }}>
-      <AppBar
-        position="fixed"
-        sx={{
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          bgcolor: "primary.main",
-        }}
-      >
-        <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            Controle Financeiro
-          </Typography>
-        </Toolbar>
-      </AppBar>
 
+      <Header setMobileOpen={setMobileOpen} />
       <SidebarNavigation
         items={TABS}
         activeId={activeTab}
         onChange={(id) => setActiveTab(id as SidebarTab)}
+        mobileOpen={mobileOpen}
+        onMobileClose={() => setMobileOpen(false)}
       />
 
       <Box
         component="main"
         sx={{
-          flexGrow: 1,
+          width: '100%',
           bgcolor: (theme) =>
             theme.palette.mode === "light"
               ? "#f5f5f5"
@@ -58,7 +51,7 @@ const Home = () => {
         }}
       >
         <Toolbar />
-        <Box sx={{ p: 3, maxWidth: 1200, mx: "auto" }}>{renderContent()}</Box>
+        <Box sx={{ p: { xs: 1, sm: 3 }, maxWidth: 1200, mx: "auto" }}>{tabs[activeTab]}</Box>
       </Box>
     </Box>
   );
