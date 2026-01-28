@@ -4,6 +4,7 @@ import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import { PageHeader } from "../../components/PageHeader";
 import { usePeopleList } from "./hooks/usePeopleList";
 import { Delete } from "@mui/icons-material";
+import TableSkeleton from "@/components/TableSkeleton";
 
 const gridColumns: GridColDef[] = [
   {
@@ -56,16 +57,20 @@ export const PeopleList = () => {
     <Box>
       <PageHeader title="Pessoas" actionLabel="Cadastrar pessoa" />
 
-      <DataGrid
-        autoPageSize
-        rows={people}
-        columns={gridColumns}
-        disableColumnMenu
-        disableColumnResize
-        hideFooter
-        showToolbar
-        disableColumnFilter
-      />
+      {isPeopleListLoading ? (
+        <TableSkeleton columns={4} rows={5} />
+      ) : (
+        <DataGrid
+          autoPageSize
+          rows={people}
+          columns={gridColumns}
+          disableColumnMenu
+          disableColumnResize
+          hideFooter
+          showToolbar
+          disableColumnFilter
+        />
+      )}
     </Box>
   );
 };
