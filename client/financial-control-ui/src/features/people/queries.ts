@@ -5,7 +5,6 @@ import {
   createPerson,
   deletePerson,
 } from "@/api/people.service";
-import type { CreatePersonDTO } from "./types";
 
 export const usePeopleListQuery = () => {
   return useQuery({
@@ -25,7 +24,7 @@ export const useCreatePersonMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (newPerson: CreatePersonDTO) => createPerson(newPerson),
+    mutationFn: createPerson,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["people"] });
     },
@@ -36,7 +35,7 @@ export const useDeletePersonMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (personId: string) => deletePerson(personId),
+    mutationFn: deletePerson,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["people"] });
     },

@@ -5,6 +5,7 @@ import { PageHeader } from "../../components/PageHeader";
 import { usePeopleList } from "./hooks/usePeopleList";
 import { Delete } from "@mui/icons-material";
 import TableSkeleton from "@/components/TableSkeleton";
+import { CreatePersonDialog } from "./CreatePersonDialog";
 
 const gridColumns: GridColDef[] = [
   {
@@ -51,11 +52,20 @@ const gridColumns: GridColDef[] = [
 ];
 
 export const PeopleList = () => {
-  const { people, isPeopleListLoading } = usePeopleList();
+  const {
+    people,
+    isPeopleListLoading,
+    createPersonDialogOpen,
+    setCreatePersonDialogOpen,
+  } = usePeopleList();
 
   return (
     <Box>
-      <PageHeader title="Pessoas" actionLabel="Cadastrar pessoa" />
+      <PageHeader
+        title="Pessoas"
+        actionLabel="Cadastrar pessoa"
+        onActionClick={() => setCreatePersonDialogOpen(true)}
+      />
 
       {isPeopleListLoading ? (
         <TableSkeleton columns={4} rows={5} />
@@ -71,6 +81,11 @@ export const PeopleList = () => {
           disableColumnFilter
         />
       )}
+
+      <CreatePersonDialog
+        open={createPersonDialogOpen}
+        onClose={() => setCreatePersonDialogOpen(false)}
+      />
     </Box>
   );
 };
