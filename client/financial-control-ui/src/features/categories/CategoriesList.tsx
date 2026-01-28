@@ -2,7 +2,9 @@ import { Box, IconButton, Paper } from "@mui/material";
 import { PageHeader } from "../../components/PageHeader";
 import type { CategoryRow } from "./types";
 import { DataGrid, type GridColDef, type GridRowModel } from "@mui/x-data-grid";
-import { Delete } from '@mui/icons-material'
+import { Delete } from "@mui/icons-material";
+import { useCategoriesList } from "./hooks/useCategoriesList";
+import { CategoryTypeMap } from "./CategoryTypeMap";
 
 const gridRows: GridRowModel<CategoryRow>[] = [
   {
@@ -32,6 +34,7 @@ const gridColumns: GridColDef[] = [
     field: "type",
     headerName: "Tipo",
     flex: 1,
+    renderCell: (params) => <CategoryTypeMap type={params.value} />,
   },
   {
     field: "actions",
@@ -46,17 +49,23 @@ const gridColumns: GridColDef[] = [
   },
 ];
 
+export const CategoriesList = () => {
+  const {
+    categories,
+    createCategory,
+    deleteCategoryMutation,
+    isCategoriesLoading,
+    isCreationPending,
+    isDeletionPending,
+  } = useCategoriesList();
 
-
-export const CategoryList = () => {
   return (
     <Box>
       <PageHeader title="Categorias" actionLabel="Cadastrar categoria" />
       <Paper>
         <DataGrid
           autoHeight
-          autoPageSize
-          rows={gridRows}
+          rows={categories || []}
           columns={gridColumns}
           disableColumnMenu
           disableColumnResize
@@ -68,4 +77,3 @@ export const CategoryList = () => {
     </Box>
   );
 };
-

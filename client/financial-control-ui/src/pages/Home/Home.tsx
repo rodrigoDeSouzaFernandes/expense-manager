@@ -4,8 +4,8 @@ import CategoryIcon from "@mui/icons-material/Category";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import { useState } from "react";
 import { PeopleList } from "../../features/people/PeopleList";
-import { CategoryList } from "../../features/categories/CategoryList";
-import { TransactionList } from "../../features/transactions";
+import { CategoriesList } from "../../features/categories/CategoriesList";
+import { TransactionsList } from "../../features/transactions/TransactionsList";
 import { SidebarNavigation } from "../../components/SidebarNavigation";
 import type { SidebarTab, TabConfig } from "./types";
 import Header from "@/components/Header";
@@ -22,8 +22,8 @@ const Home = () => {
 
   const tabs = {
     people: <PeopleList />,
-    categories: <CategoryList />,
-    transactions: <TransactionList />,
+    categories: <CategoriesList />,
+    transactions: <TransactionsList />,
   };
 
   return (

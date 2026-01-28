@@ -7,6 +7,7 @@ import {
 } from "@mui/x-data-grid";
 import { PageHeader } from "../../components/PageHeader";
 import type { TransactionRow } from "./types";
+import { formatCurrency } from "@/utils/currency";
 
 const gridRows: GridRowModel<TransactionRow>[] = [
   {
@@ -65,7 +66,8 @@ const gridColumns: GridColDef[] = [
     headerName: "Tipo",
     width: 130,
     renderCell: (params: GridRenderCellParams) => {
-      const type = params.value as TransactionRow["type"] | undefined ?? "Despesa";
+      const type =
+        (params.value as TransactionRow["type"] | undefined) ?? "Despesa";
       const color = type === "Receita" ? "success" : "error";
       return <Chip label={type} color={color} size="small" />;
     },
@@ -79,23 +81,19 @@ const gridColumns: GridColDef[] = [
     type: "number",
     renderCell: (params: GridRenderCellParams) => (
       <Typography component="span" fontWeight={500}>
-        {Number(params.value).toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        })}
+        {formatCurrency(params.value)}
       </Typography>
     ),
   },
 ];
 
-export const TransactionList = () => {
+export const TransactionsList = () => {
   return (
     <Box>
       <PageHeader title="Transações" actionLabel="Cadastrar transação" />
       <Paper>
         <DataGrid
           autoHeight
-          autoPageSize
           rows={gridRows}
           columns={gridColumns}
           disableColumnMenu
@@ -108,4 +106,3 @@ export const TransactionList = () => {
     </Box>
   );
 };
-

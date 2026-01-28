@@ -8,36 +8,37 @@ import TableSkeleton from "@/components/TableSkeleton";
 import { CreatePersonDialog } from "./CreatePersonDialog";
 import DeletePersonDialog from "./DeletePersonDialog";
 import { useMemo } from "react";
-import { create } from "node_modules/@mui/material/esm/styles/createTransitions";
+import type { Person } from "./types";
 
-const getGridColumns = (onDelete: (person: any) => void): GridColDef[] => [
+const getGridColumns = (onDelete: (person: Person) => void): GridColDef[] => [
   {
     field: "name",
     headerName: "Nome",
     flex: 1,
+    minWidth: 150,
   },
   {
     field: "age",
     headerName: "Idade",
-    width: 120,
+    
     type: "number",
   },
   {
     field: "totalExpenses",
     headerName: "Despesas",
-    width: 150,
+    
     type: "number",
   },
   {
     field: "totalIncome",
     headerName: "Receitas",
-    width: 150,
+    
     type: "number",
   },
   {
     field: "balance",
     headerName: "Saldo",
-    width: 120,
+    
     type: "number",
   },
   {
@@ -47,7 +48,7 @@ const getGridColumns = (onDelete: (person: any) => void): GridColDef[] => [
     sortable: false,
     filterable: false,
     renderCell: (params) => (
-      <IconButton onClick={() => onDelete(params.row)}>
+      <IconButton onClick={() => onDelete(params.row as Person)}>
         <Delete sx={{ "&:hover": { color: "error.main" } }} />
       </IconButton>
     ),
@@ -65,7 +66,7 @@ export const PeopleList = () => {
     isDeletionPending,
     deletePerson,
     createPerson,
-    isCreationPending
+    isCreationPending,
   } = usePeopleList();
 
   const columns = useMemo(
