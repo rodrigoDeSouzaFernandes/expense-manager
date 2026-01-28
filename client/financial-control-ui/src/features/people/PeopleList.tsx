@@ -8,6 +8,7 @@ import TableSkeleton from "@/components/TableSkeleton";
 import { CreatePersonDialog } from "./CreatePersonDialog";
 import DeletePersonDialog from "./DeletePersonDialog";
 import { useMemo } from "react";
+import { create } from "node_modules/@mui/material/esm/styles/createTransitions";
 
 const getGridColumns = (onDelete: (person: any) => void): GridColDef[] => [
   {
@@ -63,6 +64,8 @@ export const PeopleList = () => {
     setDeletePersonDialog,
     isDeletionPending,
     deletePerson,
+    createPerson,
+    isCreationPending
   } = usePeopleList();
 
   const columns = useMemo(
@@ -98,6 +101,8 @@ export const PeopleList = () => {
       <CreatePersonDialog
         open={createPersonDialogOpen}
         onClose={() => setCreatePersonDialogOpen(false)}
+        onCreate={createPerson}
+        isLoading={isCreationPending}
       />
       <DeletePersonDialog
         open={deletePersonDialog?.open}

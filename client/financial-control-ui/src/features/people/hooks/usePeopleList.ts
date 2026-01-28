@@ -1,6 +1,10 @@
 import { useCallback, useState } from "react";
-import { useDeletePersonMutation, usePeopleListQuery } from "../queries";
-import type { Person } from "../types";
+import {
+  useCreatePersonMutation,
+  useDeletePersonMutation,
+  usePeopleListQuery,
+} from "../queries";
+import type { CreatePersonDTO, Person } from "../types";
 
 interface DeletePersonDialogState {
   open: boolean;
@@ -31,7 +35,16 @@ export const usePeopleList = () => {
     });
   }, [deletePersonDialog.person]);
 
-  // const { mutate: createPerson, isCreationPending } = useCreatePersonMutation();
+  const { mutate: createPersonMutation, isPending: isCreationPending } =
+    useCreatePersonMutation();
+
+  const createPerson = (data: CreatePersonDTO) => {
+    createPersonMutation(data, {
+      onSuccess: () => {
+        setCreatePersonDialogOpen(false);
+      },
+    });
+  };
 
   return {
     people,
@@ -42,5 +55,7 @@ export const usePeopleList = () => {
     setDeletePersonDialog,
     deletePerson,
     isDeletionPending,
+    createPerson,
+    isCreationPending,
   };
 };

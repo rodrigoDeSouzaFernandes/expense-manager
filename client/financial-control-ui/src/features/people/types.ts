@@ -30,4 +30,14 @@ export interface PersonFormProps {
 export interface CreatePersonDialogProps {
   open: boolean;
   onClose: () => void;
+  onCreate: (data: CreatePersonDTO) => void;
+  isLoading: boolean;
+}
+
+export interface DeletePersonDialogProps {
+  open: boolean;
+  onClose: () => void;
+  person: Person | null;
+  onDelete: () => void;
+  isLoading: boolean;
 }

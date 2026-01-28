@@ -1,31 +1,22 @@
 import { Dialog, DialogTitle, DialogContent } from "@mui/material";
 import PersonForm from "./PersonForm";
-import { useCreatePersonMutation } from "./queries";
 import type { CreatePersonDialogProps } from "./types";
 
 export const CreatePersonDialog = ({
   open,
   onClose,
+  onCreate,
+  isLoading,
 }: CreatePersonDialogProps) => {
-  const { mutate: createPerson, isPending } = useCreatePersonMutation();
-
-  const handleSubmit = (data: any) => {
-    createPerson(data, {
-      onSuccess: () => {
-        onClose();
-      },
-    });
-  };
-
   return (
-    <Dialog open={open} onClose={onClose} fullWidth>
+    <Dialog open={open} onClose={onClose} fullWidth disableRestoreFocus>
       <DialogTitle>Criar Pessoa</DialogTitle>
 
       <DialogContent>
         <PersonForm
-          onSubmit={handleSubmit}
+          onSubmit={onCreate}
           onCancel={onClose}
-          isLoading={isPending}
+          isLoading={isLoading}
         />
       </DialogContent>
     </Dialog>

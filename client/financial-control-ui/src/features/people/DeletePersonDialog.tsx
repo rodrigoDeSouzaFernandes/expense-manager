@@ -9,15 +9,7 @@ import {
   DialogTitle,
   Typography,
 } from "@mui/material";
-import type { Person } from "./types";
-
-interface DeletePersonDialogProps {
-  open: boolean;
-  onClose: () => void;
-  person: Person | null;
-  onDelete: () => void;
-  isLoading: boolean;
-}
+import type { DeletePersonDialogProps } from "./types";
 
 const DeletePersonDialog = ({
   open,
@@ -27,7 +19,7 @@ const DeletePersonDialog = ({
   isLoading,
 }: DeletePersonDialogProps) => {
   return (
-    <Dialog open={open} onClose={onClose} fullWidth>
+    <Dialog open={open} onClose={onClose} fullWidth disableRestoreFocus>
       <DialogTitle>Deletar Pessoa</DialogTitle>
       <DialogContent>
         <Alert severity="warning" sx={{ mb: 2 }}>
