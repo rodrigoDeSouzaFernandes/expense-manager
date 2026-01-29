@@ -1,4 +1,4 @@
-import { Box, IconButton, Paper } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { PageHeader } from "../../components/PageHeader";
 import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import { Delete } from "@mui/icons-material";
@@ -6,8 +6,13 @@ import { useCategoriesList } from "./hooks/useCategoriesList";
 import { CategoryTypeMap } from "./CategoryTypeMap";
 import { CreateCategoryDialog } from "./CreateCategoryDialog";
 import TableSkeleton from "@/components/TableSkeleton";
+import DeleteCategoryDialog from "./DeleteCategoryDialog";
+import type { Category } from "./types";
+import { useMemo } from "react";
 
-const gridColumns: GridColDef[] = [
+const getCategoriesGridColumns = (
+  onDelete: (category: Category) => void,
+): GridColDef[] => [
   {
     field: "name",
     headerName: "Categoria",
@@ -24,8 +29,8 @@ const gridColumns: GridColDef[] = [
     headerName: "Remover",
     sortable: false,
     filterable: false,
-    renderCell: () => (
-      <IconButton>
+    renderCell: (params) => (
+      <IconButton onClick={() => onDelete(params.row as Category)}>
         <Delete sx={{ "&:hover": { color: "error.main" } }} />
       </IconButton>
     ),
@@ -36,13 +41,24 @@ export const CategoriesList = () => {
   const {
     categories,
     createCategory,
-    deleteCategoryMutation,
     isCategoriesLoading,
     isCreationPending,
     isDeletionPending,
     createCategoryDialogOpen,
     setCreateCategoryDialogOpen,
+    openDeleteCategoryDialog,
+    closeDeleteCategoryDialog,
+    deleteCategoryDialogProps,
+    deleteCategory
   } = useCategoriesList();
+
+  const gridColumns = useMemo(
+    () =>
+      getCategoriesGridColumns((category) =>
+        openDeleteCategoryDialog(category),
+      ),
+    [],
+  );
 
   return (
     <Box>
@@ -73,6 +89,15 @@ export const CategoriesList = () => {
         onCreate={createCategory}
         isLoading={isCreationPending}
       />
+
+      <DeleteCategoryDialog 
+      {
+        ...deleteCategoryDialogProps
+      }
+      isLoading={isDeletionPending}
+      onClose={closeDeleteCategoryDialog}
+      onDelete={deleteCategory}
+       />
     </Box>
   );
 };

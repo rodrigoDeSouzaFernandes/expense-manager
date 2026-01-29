@@ -4,11 +4,23 @@ import {
   useCreateCategoryMutation,
   useDeleteCategoryMutation,
 } from "../queries";
-import type { CategoryFormData, CreateCategoryDTO } from "../types";
+import {
+  type DeleteCategoryDialogProps,
+  type Category,
+  type CategoryFormData,
+  type CreateCategoryDTO,
+} from "../types";
 
 export const useCategoriesList = () => {
   const [createCategoryDialogOpen, setCreateCategoryDialogOpen] =
     useState<boolean>(false);
+
+  const [deleteCategoryDialogProps, setDeleteCategoryDialogProps] = useState<
+    Pick<DeleteCategoryDialogProps, "open" | "category">
+  >({
+    open: false,
+    category: null,
+  });
 
   const { data: categories, isLoading: isCategoriesLoading } =
     useCategoryListQuery();
@@ -27,14 +39,36 @@ export const useCategoriesList = () => {
     });
   };
 
+  const deleteCategory = () => {
+    if (!deleteCategoryDialogProps.category?.id) return;
+
+    deleteCategoryMutation(deleteCategoryDialogProps.category.id, {
+      onSuccess: () => {
+        setDeleteCategoryDialogProps({ open: false, category: null });
+      },
+    });
+  };
+
+  const openDeleteCategoryDialog = (category: Category) => {
+    setDeleteCategoryDialogProps({ open: true, category });
+  };
+
+  const closeDeleteCategoryDialog = () => {
+    setDeleteCategoryDialogProps({ open: false, category: null });
+  };
+
   return {
     categories,
     isCategoriesLoading,
     createCategory,
     isCreationPending,
-    deleteCategoryMutation,
     isDeletionPending,
     createCategoryDialogOpen,
     setCreateCategoryDialogOpen,
+    deleteCategoryDialogProps,
+    setDeleteCategoryDialogProps,
+    openDeleteCategoryDialog,
+    closeDeleteCategoryDialog,
+    deleteCategory,
   };
 };
