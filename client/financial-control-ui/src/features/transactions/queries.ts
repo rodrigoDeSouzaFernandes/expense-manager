@@ -5,9 +5,11 @@ import {
   deleteTransaction,
   getTransactions,
 } from "@/api/transactions.service";
+import type { CreateTransactionDTO, Transaction } from "./types";
+import type { AxiosError } from "axios";
 
 export const useTransactionsListQuery = () => {
-  return useQuery({
+  return useQuery<Transaction[]>({
     queryKey: ["transactions"],
     queryFn: getTransactions,
   });
@@ -16,7 +18,7 @@ export const useTransactionsListQuery = () => {
 export const useCreateTransactionMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  return useMutation<Transaction, AxiosError<{ message: string }>, CreateTransactionDTO>({
     mutationFn: createTransaction,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
@@ -27,7 +29,7 @@ export const useCreateTransactionMutation = () => {
 export const useDeleteTransactionMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  return useMutation<void, AxiosError<{ message: string }>, string>({
     mutationFn: deleteTransaction,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });

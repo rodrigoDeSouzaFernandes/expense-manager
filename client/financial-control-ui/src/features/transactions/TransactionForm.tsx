@@ -11,10 +11,16 @@ import {
   AlertTitle,
   Typography,
 } from "@mui/material";
-import type { TransactionFormProps } from "./types";
+import type {
+  Transaction,
+  TransactionFormProps,
+  TransactionType,
+} from "./types";
 import { useTransactionForm } from "./hooks/useTransactionForm";
 import TableSkeleton from "@/components/TableSkeleton";
 import { formatCurrencyFromInput } from "@/utils/currency";
+import { useEffect } from "react";
+import { validateTransactionType } from "./helpers/validateTransactionType";
 
 const TransactionForm = ({
   onSubmit,
@@ -37,8 +43,32 @@ const TransactionForm = ({
     return <TableSkeleton rows={5} columns={1} />;
   }
 
+  const categoryId = form.watch("categoryId");
+  const transactionType = form.watch("type");
+
+  const validateTransactionTypeCompatibility = () => {
+    const isValid = validateTransactionType(
+      categories,
+      categoryId,
+      Number(transactionType) as TransactionType,
+    );
+
+    if (!isValid) {
+      form.setError("type", {
+        message:
+          "O tipo de transação não é compatível com a categoria selecionada.",
+      });
+    }
+  };
+
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        validateTransactionTypeCompatibility();
+        form.handleSubmit(onSubmit);
+      }}
+    >
       <Stack spacing={2}>
         <Divider />
 

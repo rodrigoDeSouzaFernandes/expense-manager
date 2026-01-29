@@ -6,8 +6,11 @@ import {
 import type { CreateTransactionDTO, TransactionFormData, TransactionRow, TransactionType } from "../types";
 import { useMemo, useState } from "react";
 import { TRANSACTION_TYPES } from "../enums";
+import { useSnackbar } from "notistack";
+import type { AxiosError } from "axios";
 
 export const useTransactionsList = () => {
+  const { enqueueSnackbar } = useSnackbar();
 
   const [createTransactionDialogOpen, setCreateTransactionDialogOpen] = useState<boolean>(false);
 
@@ -42,6 +45,10 @@ export const useTransactionsList = () => {
     createTransactionMutation(formattedData, {
       onSuccess: () => {
         setCreateTransactionDialogOpen(false);
+        enqueueSnackbar("Transação criada com sucesso!", { variant: "success" });
+      },
+      onError: (error) => {
+        enqueueSnackbar(error?.response?.data?.message || "Erro ao criar transação. Tente novamente.", { variant: "error" });
       }
     });
   }

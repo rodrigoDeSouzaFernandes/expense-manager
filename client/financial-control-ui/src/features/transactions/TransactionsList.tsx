@@ -10,6 +10,7 @@ import { formatCurrency } from "@/utils/currency";
 import { useTransactionsList } from "./hooks/useTransactionsList";
 import TableSkeleton from "@/components/TableSkeleton";
 import CreateTransactionDialog from "./CreateTransactionDialog";
+import { TRANSACTION_TYPES, transactionType } from "./enums";
 
 const gridColumns: GridColDef[] = [
   {
@@ -37,7 +38,9 @@ const gridColumns: GridColDef[] = [
       const type =
         (params.value as TransactionRow["type"] | undefined) ?? "Despesa";
       const color = type === "Receita" ? "success" : "error";
-      return <Chip label={type} color={color} size="small" />;
+      return (
+        <Chip label={type} variant="outlined" color={color} size="small" />
+      );
     },
   },
   {
@@ -48,11 +51,17 @@ const gridColumns: GridColDef[] = [
     type: "number",
 
     minWidth: 150,
-    renderCell: (params: GridRenderCellParams) => (
-      <Typography component="span" fontWeight={500}>
-        {formatCurrency(params.value)}
-      </Typography>
-    ),
+    renderCell: (params: GridRenderCellParams) => {
+      return (
+        <Typography
+          color={params.row.type === "Despesa" ? "error" : "success"}
+          component="span"
+          fontWeight={500}
+        >
+          {formatCurrency(params.value)}
+        </Typography>
+      );
+    },
   },
 ];
 
