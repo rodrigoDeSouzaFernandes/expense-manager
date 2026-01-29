@@ -1,59 +1,13 @@
-import { Box, IconButton } from "@mui/material";
-import { DataGrid, type GridColDef } from "@mui/x-data-grid";
+import { Box } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 
 import { PageHeader } from "../../components/PageHeader";
 import { usePeopleList } from "./hooks/usePeopleList";
-import { Delete } from "@mui/icons-material";
 import TableSkeleton from "@/components/TableSkeleton";
 import { CreatePersonDialog } from "./CreatePersonDialog";
 import DeletePersonDialog from "./DeletePersonDialog";
 import { useMemo } from "react";
-import type { Person } from "./types";
-
-const getGridColumns = (onDelete: (person: Person) => void): GridColDef[] => [
-  {
-    field: "name",
-    headerName: "Nome",
-    flex: 1,
-    minWidth: 150,
-  },
-  {
-    field: "age",
-    headerName: "Idade",
-    
-    type: "number",
-  },
-  {
-    field: "totalExpenses",
-    headerName: "Despesas",
-    
-    type: "number",
-  },
-  {
-    field: "totalIncome",
-    headerName: "Receitas",
-    
-    type: "number",
-  },
-  {
-    field: "balance",
-    headerName: "Saldo",
-    
-    type: "number",
-  },
-  {
-    field: "remove",
-    headerName: "Excluir",
-    width: 65,
-    sortable: false,
-    filterable: false,
-    renderCell: (params) => (
-      <IconButton onClick={() => onDelete(params.row as Person)}>
-        <Delete sx={{ "&:hover": { color: "error.main" } }} />
-      </IconButton>
-    ),
-  },
-];
+import { getPeopleGridColumns } from "./grid/getPeopleGridColumns";
 
 export const PeopleList = () => {
   const {
@@ -71,7 +25,9 @@ export const PeopleList = () => {
 
   const columns = useMemo(
     () =>
-      getGridColumns((person) => setDeletePersonDialog({ open: true, person })),
+      getPeopleGridColumns((person) =>
+        setDeletePersonDialog({ open: true, person }),
+      ),
     [],
   );
 

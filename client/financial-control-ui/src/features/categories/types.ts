@@ -26,3 +26,11 @@ export interface CreateCategoryDialogProps {
   onCreate: (data: CategoryFormData) => void;
   isLoading: boolean;
 }
+
+export interface DeleteCategoryDialogProps {
+  open: boolean;
+  onClose: () => void;
+  category: Category | null;
+  onDelete: () => void;
+  isLoading: boolean;
+}

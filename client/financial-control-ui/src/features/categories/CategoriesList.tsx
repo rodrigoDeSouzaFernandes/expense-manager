@@ -1,48 +1,35 @@
-import { Box, IconButton, Paper } from "@mui/material";
+import { Box } from "@mui/material";
 import { PageHeader } from "../../components/PageHeader";
-import { DataGrid, type GridColDef } from "@mui/x-data-grid";
-import { Delete } from "@mui/icons-material";
+import { DataGrid } from "@mui/x-data-grid";
 import { useCategoriesList } from "./hooks/useCategoriesList";
-import { CategoryTypeMap } from "./CategoryTypeMap";
 import { CreateCategoryDialog } from "./CreateCategoryDialog";
 import TableSkeleton from "@/components/TableSkeleton";
-
-const gridColumns: GridColDef[] = [
-  {
-    field: "name",
-    headerName: "Categoria",
-    flex: 1,
-  },
-  {
-    field: "type",
-    headerName: "Tipo",
-    flex: 1,
-    renderCell: (params) => <CategoryTypeMap type={params.value} />,
-  },
-  {
-    field: "actions",
-    headerName: "Remover",
-    sortable: false,
-    filterable: false,
-    renderCell: () => (
-      <IconButton>
-        <Delete sx={{ "&:hover": { color: "error.main" } }} />
-      </IconButton>
-    ),
-  },
-];
+import DeleteCategoryDialog from "./DeleteCategoryDialog";
+import { useMemo } from "react";
+import { getCategoriesGridColumns } from "./grid/getCategoryGridColumns";
 
 export const CategoriesList = () => {
   const {
     categories,
     createCategory,
-    deleteCategoryMutation,
     isCategoriesLoading,
     isCreationPending,
     isDeletionPending,
     createCategoryDialogOpen,
     setCreateCategoryDialogOpen,
+    openDeleteCategoryDialog,
+    closeDeleteCategoryDialog,
+    deleteCategoryDialogProps,
+    deleteCategory,
   } = useCategoriesList();
+
+  const gridColumns = useMemo(
+    () =>
+      getCategoriesGridColumns((category) =>
+        openDeleteCategoryDialog(category),
+      ),
+    [],
+  );
 
   return (
     <Box>
@@ -72,6 +59,13 @@ export const CategoriesList = () => {
         onClose={() => setCreateCategoryDialogOpen(false)}
         onCreate={createCategory}
         isLoading={isCreationPending}
+      />
+
+      <DeleteCategoryDialog
+        {...deleteCategoryDialogProps}
+        isLoading={isDeletionPending}
+        onClose={closeDeleteCategoryDialog}
+        onDelete={deleteCategory}
       />
     </Box>
   );
