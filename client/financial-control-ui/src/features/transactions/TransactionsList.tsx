@@ -9,12 +9,9 @@ import type { TransactionRow } from "./types";
 import { formatCurrency } from "@/utils/currency";
 import { useTransactionsList } from "./hooks/useTransactionsList";
 import TableSkeleton from "@/components/TableSkeleton";
+import CreateTransactionDialog from "./CreateTransactionDialog";
 
 const gridColumns: GridColDef[] = [
-  {
-    field: "date",
-    headerName: "Data",
-  },
   {
     field: "person",
     headerName: "Pessoa",
@@ -60,11 +57,23 @@ const gridColumns: GridColDef[] = [
 ];
 
 export const TransactionsList = () => {
-  const { transactions, isTransactionsListLoading } = useTransactionsList();
+  const {
+    transactions,
+    isTransactionsListLoading,
+    createTransaction,
+    isCreationPending,
+    openCreateTransactionDialog,
+    closeCreateTransactionDialog,
+    createTransactionDialogOpen,
+  } = useTransactionsList();
 
   return (
     <Box>
-      <PageHeader title="Transações" actionLabel="Cadastrar transação" />
+      <PageHeader
+        title="Transações"
+        actionLabel="Cadastrar transação"
+        onActionClick={openCreateTransactionDialog}
+      />
       {isTransactionsListLoading ? (
         <TableSkeleton columns={6} rows={5} />
       ) : (
@@ -79,6 +88,13 @@ export const TransactionsList = () => {
           disableColumnFilter
         />
       )}
+
+      <CreateTransactionDialog
+        open={createTransactionDialogOpen}
+        onClose={closeCreateTransactionDialog}
+        onCreate={createTransaction}
+        isLoading={isCreationPending}
+      />
     </Box>
   );
 };

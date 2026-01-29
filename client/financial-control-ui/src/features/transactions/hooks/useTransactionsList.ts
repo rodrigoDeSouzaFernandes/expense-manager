@@ -1,12 +1,21 @@
 import { formatDate } from "@/utils/date";
-import { useTransactionsListQuery } from "../queries";
-import type { TransactionRow } from "../types";
-import { useMemo } from "react";
+import {
+  useCreateTransactionMutation,
+  useTransactionsListQuery,
+} from "../queries";
+import type { CreateTransactionDTO, TransactionFormData, TransactionRow, TransactionType } from "../types";
+import { useMemo, useState } from "react";
 import { TRANSACTION_TYPES } from "../enums";
 
 export const useTransactionsList = () => {
+
+  const [createTransactionDialogOpen, setCreateTransactionDialogOpen] = useState<boolean>(false);
+
   const { data, isLoading: isTransactionsListLoading } =
     useTransactionsListQuery();
+
+  const { mutate: createTransactionMutation, isPending: isCreationPending } =
+    useCreateTransactionMutation();
 
   const transactions: TransactionRow[] = useMemo(() => {
     if (!data) return [];
@@ -22,8 +31,36 @@ export const useTransactionsList = () => {
     }));
   }, [data]);
 
+  const createTransaction = (data: TransactionFormData) => {
+
+    const formattedData: CreateTransactionDTO = {
+      ...data,
+      type: Number(data.type) as TransactionType,
+      amount: Number(data.amount.replace(/\D/g, '')) / 100,
+    };
+
+    createTransactionMutation(formattedData, {
+      onSuccess: () => {
+        setCreateTransactionDialogOpen(false);
+      }
+    });
+  }
+
+  const openCreateTransactionDialog = () => {
+    setCreateTransactionDialogOpen(true);
+  }
+
+  const closeCreateTransactionDialog = () => {
+    setCreateTransactionDialogOpen(false);
+  }
+
   return {
     transactions,
     isTransactionsListLoading,
+    createTransaction,
+    isCreationPending,
+    openCreateTransactionDialog,
+    closeCreateTransactionDialog,
+    createTransactionDialogOpen
   };
 };
