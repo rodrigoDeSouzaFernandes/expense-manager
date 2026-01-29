@@ -1,4 +1,3 @@
-import type { ChipPropsColorOverrides, Color } from "@mui/material";
 import type { CategoryType } from "./types";
 
 export const categoryType = {

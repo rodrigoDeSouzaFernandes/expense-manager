@@ -1,70 +1,41 @@
-import { Box, Chip, Paper, Typography } from "@mui/material";
+import { Box, Chip, Typography } from "@mui/material";
 import {
   DataGrid,
   type GridColDef,
   type GridRenderCellParams,
-  type GridRowModel,
 } from "@mui/x-data-grid";
 import { PageHeader } from "../../components/PageHeader";
 import type { TransactionRow } from "./types";
 import { formatCurrency } from "@/utils/currency";
-
-const gridRows: GridRowModel<TransactionRow>[] = [
-  {
-    id: 1,
-    date: "10/01/2026",
-    description: "Salário mensal",
-    category: "Salário",
-    person: "João Silva",
-    type: "Receita",
-    amount: 7500,
-  },
-  {
-    id: 2,
-    date: "12/01/2026",
-    description: "Supermercado",
-    category: "Alimentação",
-    person: "Maria Souza",
-    type: "Despesa",
-    amount: 450.75,
-  },
-  {
-    id: 3,
-    date: "15/01/2026",
-    description: "Combustível",
-    category: "Transporte",
-    person: "João Silva",
-    type: "Despesa",
-    amount: 220,
-  },
-];
+import { useTransactionsList } from "./hooks/useTransactionsList";
+import TableSkeleton from "@/components/TableSkeleton";
 
 const gridColumns: GridColDef[] = [
   {
     field: "date",
     headerName: "Data",
-    width: 130,
-  },
-  {
-    field: "description",
-    headerName: "Descrição",
-    flex: 1,
-    minWidth: 180,
-  },
-  {
-    field: "category",
-    headerName: "Categoria",
-    flex: 1,
   },
   {
     field: "person",
     headerName: "Pessoa",
     flex: 1,
+    minWidth: 150,
+  },
+  {
+    field: "description",
+    headerName: "Descrição",
+    minWidth: 180,
+    flex: 1,
+  },
+  {
+    field: "category",
+    headerName: "Categoria",
+    minWidth: 150,
+    flex: 1,
   },
   {
     field: "type",
     headerName: "Tipo",
-    width: 130,
     renderCell: (params: GridRenderCellParams) => {
       const type =
         (params.value as TransactionRow["type"] | undefined) ?? "Despesa";
@@ -75,10 +46,11 @@ const gridColumns: GridColDef[] = [
   {
     field: "amount",
     headerName: "Valor",
-    width: 160,
     align: "right",
     headerAlign: "right",
     type: "number",
+
+    minWidth: 150,
     renderCell: (params: GridRenderCellParams) => (
       <Typography component="span" fontWeight={500}>
         {formatCurrency(params.value)}
@@ -88,13 +60,17 @@ const gridColumns: GridColDef[] = [
 ];
 
 export const TransactionsList = () => {
+  const { transactions, isTransactionsListLoading } = useTransactionsList();
+
   return (
     <Box>
       <PageHeader title="Transações" actionLabel="Cadastrar transação" />
-      <Paper>
+      {isTransactionsListLoading ? (
+        <TableSkeleton columns={6} rows={5} />
+      ) : (
         <DataGrid
           autoHeight
-          rows={gridRows}
+          rows={transactions || []}
           columns={gridColumns}
           disableColumnMenu
           disableColumnResize
@@ -102,7 +78,7 @@ export const TransactionsList = () => {
           showToolbar
           disableColumnFilter
         />
-      </Paper>
+      )}
     </Box>
   );
 };

@@ -5,13 +5,15 @@ import type { transactionType } from "./enums";
 export type TransactionType =
   (typeof transactionType)[keyof typeof transactionType];
 
+export type TransactionTypeLabel = "Receita" | "Despesa";
+
 export type TransactionRow = {
-  id: number;
+  id: string;
   date: string;
   description: string;
   category: string;
   person: string;
-  type: "Receita" | "Despesa";
+  type: TransactionTypeLabel;
   amount: number;
 };
 
