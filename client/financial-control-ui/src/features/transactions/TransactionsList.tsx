@@ -10,7 +10,6 @@ import { formatCurrency } from "@/utils/currency";
 import { useTransactionsList } from "./hooks/useTransactionsList";
 import TableSkeleton from "@/components/TableSkeleton";
 import CreateTransactionDialog from "./CreateTransactionDialog";
-import { TRANSACTION_TYPES, transactionType } from "./enums";
 
 const gridColumns: GridColDef[] = [
   {

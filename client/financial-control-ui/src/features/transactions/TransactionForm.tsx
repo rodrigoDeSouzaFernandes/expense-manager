@@ -11,15 +11,10 @@ import {
   AlertTitle,
   Typography,
 } from "@mui/material";
-import type {
-  Transaction,
-  TransactionFormProps,
-  TransactionType,
-} from "./types";
+import type { TransactionFormProps, TransactionType } from "./types";
 import { useTransactionForm } from "./hooks/useTransactionForm";
 import TableSkeleton from "@/components/TableSkeleton";
 import { formatCurrencyFromInput } from "@/utils/currency";
-import { useEffect } from "react";
 import { validateTransactionType } from "./helpers/validateTransactionType";
 
 const TransactionForm = ({

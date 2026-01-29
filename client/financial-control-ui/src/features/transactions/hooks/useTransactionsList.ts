@@ -7,7 +7,6 @@ import type { CreateTransactionDTO, TransactionFormData, TransactionRow, Transac
 import { useMemo, useState } from "react";
 import { TRANSACTION_TYPES } from "../enums";
 import { useSnackbar } from "notistack";
-import type { AxiosError } from "axios";
 
 export const useTransactionsList = () => {
   const { enqueueSnackbar } = useSnackbar();
