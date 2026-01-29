@@ -4,6 +4,8 @@ import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import { Delete } from "@mui/icons-material";
 import { useCategoriesList } from "./hooks/useCategoriesList";
 import { CategoryTypeMap } from "./CategoryTypeMap";
+import { CreateCategoryDialog } from "./CreateCategoryDialog";
+import TableSkeleton from "@/components/TableSkeleton";
 
 const gridColumns: GridColDef[] = [
   {
@@ -38,12 +40,21 @@ export const CategoriesList = () => {
     isCategoriesLoading,
     isCreationPending,
     isDeletionPending,
+    createCategoryDialogOpen,
+    setCreateCategoryDialogOpen,
   } = useCategoriesList();
 
   return (
     <Box>
-      <PageHeader title="Categorias" actionLabel="Cadastrar categoria" />
-      <Paper>
+      <PageHeader
+        title="Categorias"
+        actionLabel="Cadastrar categoria"
+        onActionClick={() => setCreateCategoryDialogOpen(true)}
+      />
+
+      {isCategoriesLoading ? (
+        <TableSkeleton columns={3} rows={5} />
+      ) : (
         <DataGrid
           autoHeight
           rows={categories || []}
@@ -54,7 +65,14 @@ export const CategoriesList = () => {
           showToolbar
           disableColumnFilter
         />
-      </Paper>
+      )}
+
+      <CreateCategoryDialog
+        open={createCategoryDialogOpen}
+        onClose={() => setCreateCategoryDialogOpen(false)}
+        onCreate={createCategory}
+        isLoading={isCreationPending}
+      />
     </Box>
   );
 };

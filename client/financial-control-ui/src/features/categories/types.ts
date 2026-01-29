@@ -19,3 +19,10 @@ export interface Category {
 export type CreateCategoryDTO = Omit<Category, "id">;
 
 export type CategoryFormData = z.infer<typeof categorySchema>;
+
+export interface CreateCategoryDialogProps {
+  open: boolean;
+  onClose: () => void;
+  onCreate: (data: CategoryFormData) => void;
+  isLoading: boolean;
+}

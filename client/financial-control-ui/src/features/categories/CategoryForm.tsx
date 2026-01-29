@@ -7,15 +7,17 @@ import {
   CircularProgress,
   Select,
   MenuItem,
+  Typography,
 } from "@mui/material";
 import { useCategoryForm } from "./hooks/useCategoryForm";
+import type { CategoryFormData } from "./types";
 
 const CategoryForm = ({
   onSubmit,
   onCancel,
   isLoading,
 }: {
-  onSubmit: () => void;
+  onSubmit: (data: CategoryFormData) => void;
   onCancel: () => void;
   isLoading: boolean;
 }) => {
@@ -45,17 +47,20 @@ const CategoryForm = ({
           name="type"
           control={form.control}
           render={({ field, fieldState }) => (
-            <Select
-              {...field}
-              label="Tipo"
-              inputMode="numeric"
-              fullWidth
-              error={!!fieldState.error}
-            >
-              <MenuItem value={0}>Despesa</MenuItem>
-              <MenuItem value={1}>Receita</MenuItem>
-              <MenuItem value={2}>Ambos</MenuItem>
-            </Select>
+            <>
+              <Typography fontSize={12}>Tipo da categoria:</Typography>
+              <Select
+                {...field}
+                inputMode="numeric"
+                fullWidth
+                error={!!fieldState.error}
+                style={{ marginTop: 5 }}
+              >
+                <MenuItem value={1}>Receita</MenuItem>
+                <MenuItem value={2}>Despesa</MenuItem>
+                <MenuItem value={3}>Ambos</MenuItem>
+              </Select>
+            </>
           )}
         />
 
@@ -67,7 +72,7 @@ const CategoryForm = ({
             type="submit"
             variant="contained"
             disabled={isLoading}
-            sx={{ width: 180 }}
+            sx={{ width: 200 }}
           >
             {isLoading ? (
               <CircularProgress

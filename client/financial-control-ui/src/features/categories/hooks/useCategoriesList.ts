@@ -1,11 +1,15 @@
+import { useState } from "react";
 import {
   useCategoryListQuery,
   useCreateCategoryMutation,
   useDeleteCategoryMutation,
 } from "../queries";
-import type { CreateCategoryDTO } from "../types";
+import type { CategoryFormData, CreateCategoryDTO } from "../types";
 
 export const useCategoriesList = () => {
+  const [createCategoryDialogOpen, setCreateCategoryDialogOpen] =
+    useState<boolean>(false);
+
   const { data: categories, isLoading: isCategoriesLoading } =
     useCategoryListQuery();
 
@@ -15,8 +19,12 @@ export const useCategoriesList = () => {
   const { mutate: deleteCategoryMutation, isPending: isDeletionPending } =
     useDeleteCategoryMutation();
 
-  const createCategory = (data: CreateCategoryDTO) => {
-    createCategoryMutation(data);
+  const createCategory = (data: CategoryFormData) => {
+    createCategoryMutation(data as CreateCategoryDTO, {
+      onSuccess: () => {
+        setCreateCategoryDialogOpen(false);
+      },
+    });
   };
 
   return {
@@ -26,5 +34,7 @@ export const useCategoriesList = () => {
     isCreationPending,
     deleteCategoryMutation,
     isDeletionPending,
+    createCategoryDialogOpen,
+    setCreateCategoryDialogOpen,
   };
 };

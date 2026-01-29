@@ -6,7 +6,7 @@ import { categorySchema } from "../schemas/categorySchema";
 export const useCategoryForm = () => {
   const form = useForm<CategoryFormData>({
     resolver: zodResolver(categorySchema),
-    defaultValues: { name: "", type: 0 },
+    defaultValues: { name: "", type: 2 },
     mode: "onSubmit",
     reValidateMode: "onChange",
   });
