@@ -103,25 +103,22 @@ expense-manager/
 │       ├── Models/                  # DTOs e Entities
 │       ├── Services/                # Lógica de negócio
 │       ├── Repositories/            # Acesso a dados
-│       ├── Migrations/              # Migrações do banco
 │       └── Program.cs               # Configuração da aplicação
 │
 ├── client/                          # Frontend React
 │   └── financial-control-ui/
-│       ├── src/
-│       │   ├── components/          # Componentes reutilizáveis
-│       │   ├── features/            # Features (pessoas, categorias, transações)
-│       │   ├── api/                 # Serviços de API
-│       │   ├── hooks/               # Custom hooks
-│       │   ├── context/             # Context API
-│       │   ├── theme/               # Temas MUI
-│       │   ├── utils/               # Funções utilitárias
-│       │   ├── App.tsx              # Componente raiz
-│       │   └── routes.tsx           # Definição de rotas
-│       └── package.json
+│       └── src/
+│           ├── components/          # Componentes reutilizáveis
+│           ├── features/            # Features (pessoas, categorias, transações)
+│           ├── layouts/             # Layouts
+│           ├── api/                 # Serviços de API
+│           ├── context/             # Context API
+│           ├── theme/               # Temas MUI
+│           ├── utils/               # Funções utilitárias
+│           ├── App.tsx              # Componente raiz
+│           └── routes.tsx           # Definição de rotas
 │
-├── docker-compose.yml               # Configuração do Docker
-└── README.md                        # Este arquivo
+└── docker-compose.yml               # Configuração do Docker
 ```
 
 ## ✨ Funcionalidades
