@@ -9,6 +9,7 @@ import DeletePersonDialog from "./DeletePersonDialog";
 import { useMemo } from "react";
 import { getPeopleGridColumns } from "./grid/getPeopleGridColumns";
 import { useNavigate } from "react-router-dom";
+import TotalsDashboard from "@/components/TotalDashboard";
 
 export const PeopleList = () => {
   const {
@@ -22,6 +23,7 @@ export const PeopleList = () => {
     deletePerson,
     createPerson,
     isCreationPending,
+    totals,
   } = usePeopleList();
 
   const columns = useMemo(
@@ -45,17 +47,19 @@ export const PeopleList = () => {
       {isPeopleListLoading ? (
         <TableSkeleton columns={4} rows={5} />
       ) : (
-        <DataGrid
-          rows={people || []}
-          getRowId={(row) => row.id}
-          columns={columns}
-          onRowClick={(params) => navigate(`/pessoas/${params.row.id}`)}
-          sx={{
-            "& .MuiDataGrid-row": {
-              cursor: "pointer",
-            },
-          }}
-        />
+        <>
+          <TotalsDashboard {...totals} />
+          <DataGrid
+            rows={people || []}
+            columns={columns}
+            onRowClick={(params) => navigate(`/pessoas/${params.row.id}`)}
+            sx={{
+              "& .MuiDataGrid-row": {
+                cursor: "pointer",
+              },
+            }}
+          />
+        </>
       )}
 
       <CreatePersonDialog

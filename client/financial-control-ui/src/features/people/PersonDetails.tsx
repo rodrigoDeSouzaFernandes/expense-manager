@@ -7,6 +7,7 @@ import { getTransactionGridColumns } from "../transactions/grid/getTransactionGr
 import DeleteTransactionDialog from "../transactions/DeleteTransactionDialog";
 import { ArrowBack } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import TotalsDashboard from "@/components/TotalDashboard";
 
 export const PersonDetails = () => {
   const {
@@ -19,6 +20,7 @@ export const PersonDetails = () => {
     deleteTransactionDialogProps,
     deleteTransaction,
     isDeletionPending,
+    totals,
   } = usePersonDetails();
 
   const gridColumns = getTransactionGridColumns(openDeleteTransactionDialog);
@@ -28,7 +30,10 @@ export const PersonDetails = () => {
   return (
     <Box>
       <Box sx={{ mb: 3, display: "flex", alignItems: "center", gap: 2 }}>
-        <IconButton onClick={() => navigate(-1)} aria-label="Voltar para a listagem de pessoas">
+        <IconButton
+          onClick={() => navigate(-1)}
+          aria-label="Voltar para a listagem de pessoas"
+        >
           <ArrowBack />
         </IconButton>
         <Typography variant="h1" fontSize={24} fontWeight={500}>
@@ -45,17 +50,10 @@ export const PersonDetails = () => {
       {isLoading ? (
         <TableSkeleton columns={6} rows={5} />
       ) : (
-        <DataGrid
-          autoHeight
-          rows={transactions || []}
-          columns={gridColumns}
-          disableColumnMenu
-          disableColumnResize
-          hideFooter
-          showToolbar
-          disableColumnFilter
-        
-        />
+        <>
+          <TotalsDashboard {...totals} />
+          <DataGrid rows={transactions || []} columns={gridColumns} />
+        </>
       )}
 
       <DeleteTransactionDialog

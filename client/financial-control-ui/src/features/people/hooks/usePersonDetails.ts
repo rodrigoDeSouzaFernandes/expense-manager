@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
 import { usePersonDetailsQuery } from "../queries"
 import { formatDate } from "@/utils/date";
-import { TRANSACTION_TYPES } from "@/features/transactions/enums";
+import { TRANSACTION_TYPES, transactionType } from "@/features/transactions/enums";
 import type { DeleteTransactionDialogProps, TransactionRow, TransactionType } from "@/features/transactions/types";
 import { useMemo, useState } from "react";
 import { useDeleteTransactionMutation } from "@/features/transactions/queries";
 import { enqueueSnackbar } from "notistack";
+import type { TotalsDashboardProps } from "@/components/TotalDashboard/types";
 
 export const usePersonDetails = () => {
 
@@ -66,6 +67,31 @@ export const usePersonDetails = () => {
         })
     }
 
+    const totals: TotalsDashboardProps = useMemo(() => {
+        if (!person) return { totalExpenses: 0, totalIncome: 0, balance: 0 }
+
+        const { totalExpenses, totalIncome } = person.transactions?.reduce((totals, transaction) => {
+            if (transaction.type === transactionType.DEBIT) {
+                return {
+                    ...totals,
+                    totalExpenses: totals.totalExpenses + transaction.amount
+                }
+            } else {
+                return {
+                    ...totals,
+                    totalIncome: totals.totalExpenses + transaction.amount
+                }
+            }
+
+        }, { totalExpenses: 0, totalIncome: 0 })
+
+        return {
+            totalExpenses,
+            totalIncome,
+            balance: totalIncome - totalExpenses
+        }
+    }, [person])
+
 
     return {
         person,
@@ -76,6 +102,7 @@ export const usePersonDetails = () => {
         closeDeleteTransactionDialog,
         deleteTransactionDialogProps,
         deleteTransaction,
-        isDeletionPending
+        isDeletionPending,
+        totals
     }
 }

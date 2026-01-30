@@ -46,7 +46,7 @@ export const getTransactionGridColumns = (
         <Typography
           color={params.row.type === "Despesa" ? "error" : "success"}
           component="span"
-          fontWeight={500}
+          fontSize={14}
         >
           {formatCurrency(params.value)}
         </Typography>

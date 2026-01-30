@@ -1,7 +1,8 @@
 import { Delete } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import type { Person } from "../types";
-import type { GridColDef } from "@mui/x-data-grid";
+import type { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { formatCurrency } from "@/utils/currency";
 
 export const getPeopleGridColumns = (
   onDelete: (person: Person) => void,
@@ -21,20 +22,30 @@ export const getPeopleGridColumns = (
   {
     field: "totalExpenses",
     headerName: "Despesas",
-
     type: "number",
+    renderCell: (param) => formatCurrency(param.value),
   },
   {
     field: "totalIncome",
     headerName: "Receitas",
-
     type: "number",
+    renderCell: (param) => formatCurrency(param.value),
   },
   {
     field: "balance",
     headerName: "Saldo",
-
     type: "number",
+    renderCell: (params: GridRenderCellParams) => {
+      return (
+        <Typography
+          color={params.value < 0 ? "error" : "success"}
+          component="span"
+          fontSize={14}
+        >
+          {formatCurrency(params.value)}
+        </Typography>
+      );
+    },
   },
   {
     field: "remove",

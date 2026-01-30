@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   useCreatePersonMutation,
   useDeletePersonMutation,
@@ -6,6 +6,7 @@ import {
 } from "../queries";
 import type { CreatePersonDTO, Person } from "../types";
 import { enqueueSnackbar } from "notistack";
+import type { TotalsDashboardProps } from "@/components/TotalDashboard/types";
 
 interface DeletePersonDialogState {
   open: boolean;
@@ -56,6 +57,23 @@ export const usePeopleList = () => {
     });
   };
 
+  const totals: TotalsDashboardProps = useMemo(() => {
+    if (!people) return { totalExpenses: 0, totalIncome: 0, balance: 0 }
+
+    const { totalExpenses, totalIncome } = people?.reduce((totals, person) =>
+    ({
+      totalExpenses: totals.totalExpenses + person.totalExpenses,
+      totalIncome: totals.totalIncome + person.totalIncome
+    }
+    ), { totalExpenses: 0, totalIncome: 0 })
+
+    return {
+      totalExpenses,
+      totalIncome,
+      balance: totalIncome - totalExpenses
+    }
+  }, [people])
+
   return {
     people,
     isPeopleListLoading,
@@ -67,5 +85,6 @@ export const usePeopleList = () => {
     isDeletionPending,
     createPerson,
     isCreationPending,
+    totals
   };
 };
