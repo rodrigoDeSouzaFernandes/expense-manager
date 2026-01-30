@@ -9,7 +9,6 @@ import {
   MenuItem,
   Alert,
   AlertTitle,
-  Typography,
   FormControl,
   InputLabel,
   FormHelperText,
@@ -29,8 +28,7 @@ const TransactionForm = ({
   onCancel,
   isCreationLoading,
 }: TransactionFormProps) => {
-  const { form, people, categories, isLoading, peopleMap, categoryMap } =
-    useTransactionForm();
+  const { form, people, categories, isLoading } = useTransactionForm();
 
   if (!isLoading && (!people || !categories)) {
     return (

@@ -11,17 +11,6 @@ export const useTransactionForm = () => {
   const { data: people, isLoading: isPeopleLoading } = usePeopleListQuery();
   const { data: categories, isLoading: isCategoriesLoading } = useCategoryListQuery();
 
-  const peopleMap = useMemo(
-    () => new Map(people?.map(p => [p.id, p.name])),
-    [people]
-  );
-
-  const categoryMap = useMemo(
-    () => new Map(categories?.map(c => [c.id, c.name])),
-    [categories]
-  );
-
-
   const isLoading = useMemo(() =>
     isPeopleLoading || isCategoriesLoading
     , [isPeopleLoading, isCategoriesLoading]);
@@ -39,5 +28,5 @@ export const useTransactionForm = () => {
     reValidateMode: "onChange",
   });
 
-  return { form, people, categories, isLoading, peopleMap, categoryMap};
+  return { form, people, categories, isLoading };
 };
