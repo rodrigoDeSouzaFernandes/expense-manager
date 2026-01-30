@@ -44,6 +44,7 @@ export const getPeopleGridColumns = (
     filterable: false,
     renderCell: (params) => (
       <IconButton
+        aria-label={`Exluir pessoa ${params?.row?.name}`}
         onClick={(e) => {
           e.stopPropagation();
           onDelete(params.row as Person);

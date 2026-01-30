@@ -17,7 +17,6 @@ import { ThemeContextProvider } from "./context/ThemeContext.tsx";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <CssBaseline />
       <SnackbarProvider
         maxSnack={3}
         autoHideDuration={3000}

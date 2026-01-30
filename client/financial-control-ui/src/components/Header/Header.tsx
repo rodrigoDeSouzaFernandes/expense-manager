@@ -4,7 +4,7 @@ import type { HeaderProps } from "./types";
 import { DarkMode, LightMode } from "@mui/icons-material";
 import { useThemeMode } from "@/context/ThemeContext";
 
-const Header = ({ toggleSidebar }: HeaderProps) => {
+const Header = ({ toggleSidebar, mobileOpen }: HeaderProps) => {
   const { mode, toggleMode } = useThemeMode();
 
   return (
@@ -12,7 +12,8 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
       position="fixed"
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
-        bgcolor: "primary.main",
+        bgcolor: (theme) =>
+          theme.palette.mode === "dark" ? "background.paper" : "primary.main",
       }}
     >
       <Toolbar>
@@ -20,21 +21,20 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
           color="inherit"
           edge="start"
           onClick={() => toggleSidebar()}
-          sx={{ mr: 2, display: { md: "none" }, color: "primary.contrastText" }}
+          sx={{ mr: 2, display: { md: "none" } }}
+          aria-label={
+            mobileOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"
+          }
         >
           <MenuIcon />
         </IconButton>
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          color="primary.contrastText"
-        >
+        <Typography variant="h6" noWrap component="div">
           Controle Financeiro
         </Typography>
         <IconButton
+          color="inherit"
           onClick={toggleMode}
-          sx={{ ml: "auto", color: "primary.contrastText" }}
+          sx={{ ml: "auto" }}
           aria-label={
             mode === "dark" ? "Ativar modo claro" : "Ativar modo escuro"
           }

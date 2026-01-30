@@ -8,6 +8,9 @@ import {
   Select,
   MenuItem,
   Typography,
+  FormControl,
+  InputLabel,
+  FormHelperText,
 } from "@mui/material";
 import { useCategoryForm } from "./hooks/useCategoryForm";
 import type { CategoryFormData } from "./types";
@@ -47,20 +50,21 @@ const CategoryForm = ({
           name="type"
           control={form.control}
           render={({ field, fieldState }) => (
-            <>
-              <Typography fontSize={12}>Tipo da categoria:</Typography>
+            <FormControl fullWidth error={!!fieldState.error}>
+              <InputLabel id="type-select-label">Tipo de Cateegoria</InputLabel>
+
               <Select
                 {...field}
+                label="Tipo de Categoria"
+                labelId="type-select-label"
                 inputMode="numeric"
-                fullWidth
-                error={!!fieldState.error}
-                style={{ marginTop: 5 }}
               >
                 <MenuItem value={1}>Receita</MenuItem>
                 <MenuItem value={2}>Despesa</MenuItem>
                 <MenuItem value={3}>Ambos</MenuItem>
               </Select>
-            </>
+              <FormHelperText>{fieldState.error?.message}</FormHelperText>
+            </FormControl>
           )}
         />
 

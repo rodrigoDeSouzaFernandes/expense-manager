@@ -24,7 +24,10 @@ export const getCategoriesGridColumns = (
     sortable: false,
     filterable: false,
     renderCell: (params) => (
-      <IconButton onClick={() => onDelete(params.row as Category)}>
+      <IconButton
+        aria-label={`Exluir categoria ${params?.row?.name}`}
+        onClick={() => onDelete(params.row as Category)}
+      >
         <Delete sx={{ "&:hover": { color: "error.main" } }} />
       </IconButton>
     ),

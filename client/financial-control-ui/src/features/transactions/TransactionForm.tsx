@@ -10,6 +10,9 @@ import {
   Alert,
   AlertTitle,
   Typography,
+  FormControl,
+  InputLabel,
+  FormHelperText,
 } from "@mui/material";
 import type {
   TransactionFormData,
@@ -67,30 +70,17 @@ const TransactionForm = ({
           name="personId"
           control={form.control}
           render={({ field, fieldState }) => (
-            <>
-              <Select
-                {...field}
-                fullWidth
-                error={!!fieldState.error}
-                displayEmpty
-                renderValue={(value) =>
-                  value === "" ? "Selecione uma pessoa" : peopleMap.get(value)
-                }
-              >
-                {people?.map((person) => (
-                  <MenuItem key={person.id} value={person.id}>
-                    {person.name}
+            <FormControl fullWidth error={!!fieldState.error}>
+              <InputLabel id="person-select-label">Pessoa</InputLabel>
+              <Select {...field} labelId="person-select-label" label="Pessoa">
+                {people?.map((p) => (
+                  <MenuItem key={p.id} value={p.id}>
+                    {p.name}
                   </MenuItem>
                 ))}
               </Select>
-              <Typography
-                variant="caption"
-                color="error"
-                style={{ marginTop: 3, marginInline: 14 }}
-              >
-                {fieldState.error?.message}
-              </Typography>
-            </>
+              <FormHelperText>{fieldState.error?.message}</FormHelperText>
+            </FormControl>
           )}
         />
 
@@ -98,17 +88,13 @@ const TransactionForm = ({
           name="categoryId"
           control={form.control}
           render={({ field, fieldState }) => (
-            <>
+            <FormControl fullWidth error={!!fieldState.error}>
+              <InputLabel id="category-select-label">Categoria</InputLabel>
+
               <Select
                 {...field}
-                fullWidth
-                error={!!fieldState.error}
-                displayEmpty
-                renderValue={(value) =>
-                  value === ""
-                    ? "Selecione uma categoria"
-                    : categoryMap.get(value)
-                }
+                labelId="category-select-label"
+                label="Categoria"
               >
                 {categories?.map((category) => (
                   <MenuItem key={category.id} value={category.id}>
@@ -116,14 +102,8 @@ const TransactionForm = ({
                   </MenuItem>
                 ))}
               </Select>
-              <Typography
-                variant="caption"
-                color="error"
-                style={{ marginTop: 3, marginInline: 14 }}
-              >
-                {fieldState.error?.message}
-              </Typography>
-            </>
+              <FormHelperText>{fieldState.error?.message}</FormHelperText>
+            </FormControl>
           )}
         />
 
@@ -146,19 +126,18 @@ const TransactionForm = ({
           name="type"
           control={form.control}
           render={({ field, fieldState }) => (
-            <>
-              <Select {...field} fullWidth error={!!fieldState.error}>
+            <FormControl fullWidth error={!!fieldState.error}>
+              <InputLabel id="type-select-label">Tipo de Transação</InputLabel>
+              <Select
+                {...field}
+                labelId="type-select-label"
+                label="Tipo de transação"
+              >
                 <MenuItem value="1">Receita</MenuItem>
                 <MenuItem value="2">Despesa</MenuItem>
               </Select>
-              <Typography
-                variant="caption"
-                color="error"
-                style={{ marginTop: 3, marginInline: 14 }}
-              >
-                {fieldState.error?.message}
-              </Typography>
-            </>
+              <FormHelperText>{fieldState.error?.message}</FormHelperText>
+            </FormControl>
           )}
         />
 

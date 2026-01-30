@@ -57,6 +57,7 @@ export const lightTheme = createTheme(
             primary: {
                 main: "#1976d2",
             },
+
         },
     },
     dataGridPtBR
@@ -75,6 +76,7 @@ export const darkTheme = createTheme(
             },
             primary: {
                 main: "#8ebfff",
+
             },
         },
     },

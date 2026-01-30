@@ -60,7 +60,10 @@ export const getTransactionGridColumns = (
     sortable: false,
     filterable: false,
     renderCell: (params) => (
-      <IconButton onClick={() => onDelete(params.row as TransactionRow)}>
+      <IconButton
+        aria-label={`Exluir transação ${params?.row?.description}`}
+        onClick={() => onDelete(params.row as TransactionRow)}
+      >
         <Delete sx={{ "&:hover": { color: "error.main" } }} />
       </IconButton>
     ),

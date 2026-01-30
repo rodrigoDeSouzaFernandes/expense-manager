@@ -22,7 +22,7 @@ const HomeLayout = () => {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <Header toggleSidebar={() => setMobileOpen((prev) => !prev)} />
+      <Header toggleSidebar={() => setMobileOpen((prev) => !prev)} mobileOpen={mobileOpen} />
 
       <SidebarNavigation
         items={TABS}

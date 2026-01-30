@@ -28,7 +28,7 @@ export const PersonDetails = () => {
   return (
     <Box>
       <Box sx={{ mb: 3, display: "flex", alignItems: "center", gap: 2 }}>
-        <IconButton onClick={() => navigate(-1)} aria-label="voltar">
+        <IconButton onClick={() => navigate(-1)} aria-label="Voltar para a listagem de pessoas">
           <ArrowBack />
         </IconButton>
         <Typography variant="h1" fontSize={24} fontWeight={500}>
