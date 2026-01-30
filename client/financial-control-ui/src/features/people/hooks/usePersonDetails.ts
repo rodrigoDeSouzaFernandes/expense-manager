@@ -71,6 +71,7 @@ export const usePersonDetails = () => {
         if (!person) return { totalExpenses: 0, totalIncome: 0, balance: 0 }
 
         const { totalExpenses, totalIncome } = person.transactions?.reduce((totals, transaction) => {
+            console.log({ type: transaction.type })
             if (transaction.type === transactionType.DEBIT) {
                 return {
                     ...totals,
@@ -79,7 +80,7 @@ export const usePersonDetails = () => {
             } else {
                 return {
                     ...totals,
-                    totalIncome: totals.totalExpenses + transaction.amount
+                    totalIncome: totals.totalIncome + transaction.amount
                 }
             }
 
