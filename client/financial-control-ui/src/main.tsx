@@ -12,6 +12,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 import App from "./App.tsx";
+import { ThemeContextProvider } from "./context/ThemeContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -22,7 +23,9 @@ createRoot(document.getElementById("root")!).render(
         autoHideDuration={3000}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
-        <App />
+        <ThemeContextProvider>
+          <App />
+        </ThemeContextProvider>
       </SnackbarProvider>
     </QueryClientProvider>
   </StrictMode>,

@@ -1,10 +1,4 @@
-import {
-  Alert,
-  AlertTitle,
-  Box,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { Alert, AlertTitle, Box, IconButton, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
 import TableSkeleton from "@/components/TableSkeleton";
@@ -60,6 +54,7 @@ export const PersonDetails = () => {
           hideFooter
           showToolbar
           disableColumnFilter
+        
         />
       )}
 
