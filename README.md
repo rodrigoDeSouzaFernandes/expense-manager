@@ -2,6 +2,8 @@
 
 Aplicação full-stack para gestão de transações financeiras. Frontend em React 19 com TypeScript e Material-UI. Backend em .NET 9 com Entity Framework e SQL Server.
 
+![Expense Manager](expense-manager.gif)
+
 ## 📋 Sobre o Projeto
 
 O **Expense Manager** é uma aplicação full-stack que permite usuários gerenciar suas finanças de forma simples e eficiente. Com ele, é possível:

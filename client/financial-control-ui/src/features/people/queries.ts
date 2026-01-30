@@ -30,6 +30,7 @@ export const useCreatePersonMutation = () => {
     mutationFn: createPerson,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["people"] });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
     },
   });
 };
@@ -41,6 +42,7 @@ export const useDeletePersonMutation = () => {
     mutationFn: deletePerson,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["people"] });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
     },
   });
 };
