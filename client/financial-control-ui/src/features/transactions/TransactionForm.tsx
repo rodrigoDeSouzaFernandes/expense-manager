@@ -166,7 +166,11 @@ const TransactionForm = ({
           )}
         />
 
-        <Stack direction={"row"} spacing={2} justifyContent="flex-end">
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={[1, 2]}
+          justifyContent="flex-end"
+        >
           <Button variant="outlined" onClick={onCancel}>
             Cancelar
           </Button>
@@ -174,7 +178,7 @@ const TransactionForm = ({
             type="submit"
             variant="contained"
             disabled={isCreationLoading}
-            sx={{ width: 220 }}
+            sx={{ width: { sm: 220 } }}
           >
             {isCreationLoading ? (
               <CircularProgress

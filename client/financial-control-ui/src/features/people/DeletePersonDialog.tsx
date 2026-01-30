@@ -7,6 +7,7 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  Stack,
   Typography,
 } from "@mui/material";
 import type { DeletePersonDialogProps } from "./types";
@@ -27,10 +28,14 @@ const DeletePersonDialog = ({
           Esta ação é irreversível e irá deletar todos os dados relacionados a
           esta pessoa.
         </Alert>
-        <Typography>
+        <Typography sx={{ mb: 2 }}>
           Tem certeza que deseja deletar a pessoa "{person?.name}"?
         </Typography>
-        <Box mt={3} display="flex" gap={2} justifyContent="flex-end">
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={[1,2]}
+          justifyContent="flex-end"
+        >
           <Button variant="outlined" color="error" onClick={onClose}>
             Cancelar
           </Button>
@@ -39,7 +44,7 @@ const DeletePersonDialog = ({
             variant="contained"
             color="error"
             onClick={onDelete}
-            sx={{ width: 100 }}
+            sx={{ width: { xs: "100%", sm: 100 } }}
           >
             {isLoading ? (
               <CircularProgress
@@ -50,7 +55,7 @@ const DeletePersonDialog = ({
               "Deletar"
             )}
           </Button>
-        </Box>
+        </Stack>
       </DialogContent>
     </Dialog>
   );

@@ -22,7 +22,10 @@ const HomeLayout = () => {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <Header toggleSidebar={() => setMobileOpen((prev) => !prev)} mobileOpen={mobileOpen} />
+      <Header
+        toggleSidebar={() => setMobileOpen((prev) => !prev)}
+        mobileOpen={mobileOpen}
+      />
 
       <SidebarNavigation
         items={TABS}
@@ -35,12 +38,11 @@ const HomeLayout = () => {
       <Box
         component="main"
         sx={{
-          width: "100%",
+          width: { xs:"100%", sm: "100%", md: "calc(100vw - 250px)" },
           bgcolor: (theme) =>
             theme.palette.mode === "light"
               ? "#f5f5f5"
               : theme.palette.background.default,
-          minHeight: "100vh",
         }}
       >
         <Toolbar />

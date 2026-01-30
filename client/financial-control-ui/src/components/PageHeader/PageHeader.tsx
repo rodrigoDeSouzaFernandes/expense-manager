@@ -13,7 +13,7 @@ const PageHeader = ({
       display="flex"
       mb={3}
       sx={{
-        justifyContent: 'space-between',
+        justifyContent: "space-between",
         flexDirection: { xs: "column", sm: "row" },
         alignItems: { xs: "center", sm: "center" },
         gap: { xs: 2, sm: 0 },
@@ -38,4 +38,3 @@ const PageHeader = ({
 };
 
 export default PageHeader;
-

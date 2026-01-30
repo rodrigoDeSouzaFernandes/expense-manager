@@ -59,7 +59,6 @@ const SidebarNavigation = ({
 
   return (
     <>
-      {/* DESKTOP */}
       <Drawer
         variant="permanent"
         sx={{
@@ -75,7 +74,6 @@ const SidebarNavigation = ({
         {content}
       </Drawer>
 
-      {/* MOBILE */}
       <Drawer
         variant="temporary"
         open={mobileOpen}

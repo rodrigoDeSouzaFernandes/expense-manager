@@ -1,12 +1,12 @@
 import {
   Alert,
   AlertTitle,
-  Box,
   Button,
   CircularProgress,
   Dialog,
   DialogContent,
   DialogTitle,
+  Stack,
   Typography,
 } from "@mui/material";
 import type { DeleteTransactionDialogProps } from "./types";
@@ -32,8 +32,14 @@ const DeleteTransactionDialog = ({
             <li>Tipo: {transaction?.type}</li>
           </ul>
         </Alert>
-        <Typography>Tem certeza que deseja deletar esta transação?</Typography>
-        <Box mt={3} display="flex" gap={2} justifyContent="flex-end">
+        <Typography sx={{ mb: 2 }}>
+          Tem certeza que deseja deletar esta transação?
+        </Typography>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={[1,2]}
+          justifyContent="flex-end"
+        >
           <Button variant="outlined" color="error" onClick={onClose}>
             Cancelar
           </Button>
@@ -42,7 +48,7 @@ const DeleteTransactionDialog = ({
             variant="contained"
             color="error"
             onClick={onDelete}
-            sx={{ width: 100 }}
+            sx={{ width: { sm: 100 } }}
           >
             {isLoading ? (
               <CircularProgress
@@ -53,7 +59,7 @@ const DeleteTransactionDialog = ({
               "Deletar"
             )}
           </Button>
-        </Box>
+        </Stack>
       </DialogContent>
     </Dialog>
   );

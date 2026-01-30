@@ -7,6 +7,7 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  Stack,
   Typography,
 } from "@mui/material";
 import type { DeleteCategoryDialogProps } from "./types";
@@ -26,10 +27,14 @@ const DeleteCategoryDialog = ({
           <AlertTitle>Atenção</AlertTitle>
           Esta ação é irreversível e irá deletar esta categoria.
         </Alert>
-        <Typography>
+        <Typography sx={{ mb: 2 }}>
           Tem certeza que deseja deletar a categoria "{category?.name}"?
         </Typography>
-        <Box mt={3} display="flex" gap={2} justifyContent="flex-end">
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={[1,2]}
+          justifyContent="flex-end"
+        >
           <Button variant="outlined" color="error" onClick={onClose}>
             Cancelar
           </Button>
@@ -38,7 +43,7 @@ const DeleteCategoryDialog = ({
             variant="contained"
             color="error"
             onClick={onDelete}
-            sx={{ width: 100 }}
+            sx={{ width: { xs: "100%", sm: 100 } }}
           >
             {isLoading ? (
               <CircularProgress
@@ -49,7 +54,7 @@ const DeleteCategoryDialog = ({
               "Deletar"
             )}
           </Button>
-        </Box>
+        </Stack>
       </DialogContent>
     </Dialog>
   );
