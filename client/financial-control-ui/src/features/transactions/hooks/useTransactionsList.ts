@@ -3,7 +3,7 @@ import {
   useCreateTransactionMutation,
   useTransactionsListQuery,
 } from "../queries";
-import type { CreateTransactionDTO, TransactionFormData, TransactionRow, TransactionType } from "../types";
+import type { CreateTransactionDTO, DeleteTransactionDialogProps, TransactionFormData, TransactionRow, TransactionType } from "../types";
 import { useMemo, useState } from "react";
 import { TRANSACTION_TYPES } from "../enums";
 import { useSnackbar } from "notistack";
@@ -12,6 +12,11 @@ export const useTransactionsList = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const [createTransactionDialogOpen, setCreateTransactionDialogOpen] = useState<boolean>(false);
+
+  const [deleteTransactionDialogProps, setDeleteTransactionDialogProps] = useState<Pick<DeleteTransactionDialogProps, "open" | "transaction">>({
+    open: false,
+    transaction: null,
+  })
 
   const { data, isLoading: isTransactionsListLoading } =
     useTransactionsListQuery();
@@ -60,6 +65,19 @@ export const useTransactionsList = () => {
     setCreateTransactionDialogOpen(false);
   }
 
+  const openDeleteTransactionDialog = (transaction: TransactionRow) => {
+    setDeleteTransactionDialogProps({
+      open: true, transaction
+    })
+  }
+
+  const closeDeleteTransactionDialog = () => {
+    setDeleteTransactionDialogProps({
+      open: false,
+      transaction: null,
+    })
+  }
+
   return {
     transactions,
     isTransactionsListLoading,
@@ -67,6 +85,9 @@ export const useTransactionsList = () => {
     isCreationPending,
     openCreateTransactionDialog,
     closeCreateTransactionDialog,
-    createTransactionDialogOpen
+    createTransactionDialogOpen,
+    openDeleteTransactionDialog,
+    closeDeleteTransactionDialog,
+    deleteTransactionDialogProps
   };
 };

@@ -55,7 +55,7 @@ export interface CreateTransactionDialogProps {
 export interface DeleteTransactionDialogProps {
   open: boolean;
   onClose: () => void;
-  person: Person | null;
+  transaction: TransactionRow | null;
   onDelete: () => void;
   isLoading: boolean;
 }

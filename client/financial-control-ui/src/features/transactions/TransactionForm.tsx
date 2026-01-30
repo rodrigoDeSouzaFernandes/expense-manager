@@ -11,11 +11,15 @@ import {
   AlertTitle,
   Typography,
 } from "@mui/material";
-import type { TransactionFormProps, TransactionType } from "./types";
+import type {
+  TransactionFormData,
+  TransactionFormProps,
+  TransactionType,
+} from "./types";
 import { useTransactionForm } from "./hooks/useTransactionForm";
 import TableSkeleton from "@/components/TableSkeleton";
 import { formatCurrencyFromInput } from "@/utils/currency";
-import { validateTransactionType } from "./helpers/validateTransactionType";
+import { validateTransactionTypeCompatibility } from "./helpers/validateTransactionType";
 
 const TransactionForm = ({
   onSubmit,
@@ -41,29 +45,21 @@ const TransactionForm = ({
   const categoryId = form.watch("categoryId");
   const transactionType = form.watch("type");
 
-  const validateTransactionTypeCompatibility = () => {
-    const isValid = validateTransactionType(
+  const submitFormWithExtraValidation = (value: TransactionFormData) => {
+    const isValid = validateTransactionTypeCompatibility(
+      form,
       categories,
       categoryId,
       Number(transactionType) as TransactionType,
     );
 
-    if (!isValid) {
-      form.setError("type", {
-        message:
-          "O tipo de transação não é compatível com a categoria selecionada.",
-      });
-    }
+    if (!isValid) return;
+
+    onSubmit(value);
   };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        validateTransactionTypeCompatibility();
-        form.handleSubmit(onSubmit);
-      }}
-    >
+    <form onSubmit={form.handleSubmit(submitFormWithExtraValidation)}>
       <Stack spacing={2}>
         <Divider />
 
@@ -150,10 +146,19 @@ const TransactionForm = ({
           name="type"
           control={form.control}
           render={({ field, fieldState }) => (
-            <Select {...field} fullWidth error={!!fieldState.error}>
-              <MenuItem value="1">Receita</MenuItem>
-              <MenuItem value="2">Despesa</MenuItem>
-            </Select>
+            <>
+              <Select {...field} fullWidth error={!!fieldState.error}>
+                <MenuItem value="1">Receita</MenuItem>
+                <MenuItem value="2">Despesa</MenuItem>
+              </Select>
+              <Typography
+                variant="caption"
+                color="error"
+                style={{ marginTop: 3, marginInline: 14 }}
+              >
+                {fieldState.error?.message}
+              </Typography>
+            </>
           )}
         />
 
@@ -192,7 +197,7 @@ const TransactionForm = ({
             type="submit"
             variant="contained"
             disabled={isCreationLoading}
-            sx={{ width: 180 }}
+            sx={{ width: 220 }}
           >
             {isCreationLoading ? (
               <CircularProgress
@@ -200,7 +205,7 @@ const TransactionForm = ({
                 sx={{ color: "primary.contrastText" }}
               />
             ) : (
-              "Cadastrar Pessoa"
+              "Cadastrar Transação"
             )}
           </Button>
         </Stack>

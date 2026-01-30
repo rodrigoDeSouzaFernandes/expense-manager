@@ -1,68 +1,12 @@
-import { Box, Chip, Typography } from "@mui/material";
-import {
-  DataGrid,
-  type GridColDef,
-  type GridRenderCellParams,
-} from "@mui/x-data-grid";
+import { Box } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import { PageHeader } from "../../components/PageHeader";
-import type { TransactionRow } from "./types";
-import { formatCurrency } from "@/utils/currency";
+
 import { useTransactionsList } from "./hooks/useTransactionsList";
 import TableSkeleton from "@/components/TableSkeleton";
 import CreateTransactionDialog from "./CreateTransactionDialog";
-
-const gridColumns: GridColDef[] = [
-  {
-    field: "person",
-    headerName: "Pessoa",
-    flex: 1,
-    minWidth: 150,
-  },
-  {
-    field: "description",
-    headerName: "Descrição",
-    minWidth: 180,
-    flex: 1,
-  },
-  {
-    field: "category",
-    headerName: "Categoria",
-    minWidth: 150,
-    flex: 1,
-  },
-  {
-    field: "type",
-    headerName: "Tipo",
-    renderCell: (params: GridRenderCellParams) => {
-      const type =
-        (params.value as TransactionRow["type"] | undefined) ?? "Despesa";
-      const color = type === "Receita" ? "success" : "error";
-      return (
-        <Chip label={type} variant="outlined" color={color} size="small" />
-      );
-    },
-  },
-  {
-    field: "amount",
-    headerName: "Valor",
-    align: "right",
-    headerAlign: "right",
-    type: "number",
-
-    minWidth: 150,
-    renderCell: (params: GridRenderCellParams) => {
-      return (
-        <Typography
-          color={params.row.type === "Despesa" ? "error" : "success"}
-          component="span"
-          fontWeight={500}
-        >
-          {formatCurrency(params.value)}
-        </Typography>
-      );
-    },
-  },
-];
+import { getTransactionGridColumns } from "./grid/getTransactionGridColumns";
+import DeleteTransactionDialog from "./DeleteTransactionDialog";
 
 export const TransactionsList = () => {
   const {
@@ -73,7 +17,12 @@ export const TransactionsList = () => {
     openCreateTransactionDialog,
     closeCreateTransactionDialog,
     createTransactionDialogOpen,
+    closeDeleteTransactionDialog,
+    deleteTransactionDialogProps,
+    openDeleteTransactionDialog,
   } = useTransactionsList();
+
+  const gridColumns = getTransactionGridColumns(openDeleteTransactionDialog);
 
   return (
     <Box>
@@ -102,6 +51,13 @@ export const TransactionsList = () => {
         onClose={closeCreateTransactionDialog}
         onCreate={createTransaction}
         isLoading={isCreationPending}
+      />
+
+      <DeleteTransactionDialog
+        {...deleteTransactionDialogProps}
+        onDelete={() => {}}
+        onClose={closeDeleteTransactionDialog}
+        isLoading={false}
       />
     </Box>
   );
