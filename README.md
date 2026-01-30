@@ -1,6 +1,6 @@
 # Expense Manager
 
-Aplicação full-stack para gestão de transações financeiras. Frontend em React 19 com TypeScript e Material-UI. Backend em .NET 9 com Entity Framework Core e SQL Server.
+Aplicação full-stack para gestão de transações financeiras. Frontend em React 19 com TypeScript e Material-UI. Backend em .NET 9 com Entity Framework e SQL Server.
 
 ## 📋 Sobre o Projeto
 
@@ -14,6 +14,7 @@ O **Expense Manager** é uma aplicação full-stack que permite usuários gerenc
 ## 🛠️ Stack Tecnológico
 
 ### Frontend
+
 - **React** 19.2.0 - Biblioteca UI
 - **TypeScript** 5.9.3 - Tipagem estática
 - **Vite** 7.2.4 - Build tool e dev server
@@ -25,6 +26,7 @@ O **Expense Manager** é uma aplicação full-stack que permite usuários gerenc
 - **Axios** 1.13.3 - Cliente HTTP
 
 ### Backend
+
 - **.NET** 9.0 - Framework
 - **ASP.NET Core** 9.0 - Web API
 - **Entity Framework Core** 9.0.0 - ORM
@@ -42,6 +44,7 @@ Antes de começar, certifique-se de ter instalado:
 ## 🚀 Como Rodar o Projeto
 
 ### 1. Clone o Repositório
+
 (ou baixe o arquivo .zip pelo GitHub)
 
 ```bash
@@ -122,17 +125,20 @@ expense-manager/
 ## ✨ Funcionalidades
 
 ### Pessoas
+
 - ✅ Listar todas as pessoas com saldo consolidado
 - ✅ Visualizar detalhes e transações de uma pessoa
 - ✅ Cadastrar nova pessoa
 - ✅ Deletar pessoa
 
 ### Categorias
+
 - ✅ Listar categorias
 - ✅ Criar categorias (Receita, Despesa ou Ambas)
 - ✅ Deletar categoria
 
 ### Transações
+
 - ✅ Listar todas as transações
 - ✅ Criar transação (associando pessoa e categoria)
 - ✅ Deletar transação
@@ -140,14 +146,9 @@ expense-manager/
 ## 🔌 Endpoints da API
 
 ### Pessoas
-- `GET /api/person` - Listar todas as pessoas
-### Pessoas
 - `GET /api/people` - Listar todas as pessoas
-- `GET /api/person/{id}` - Obter pessoa por ID
 - `GET /api/people/{id}` - Obter pessoa por ID
-- `POST /api/person` - Criar nova pessoa
 - `POST /api/people` - Criar nova pessoa
-- `DELETE /api/person/{id}` - Deletar pessoa
 - `DELETE /api/people/{id}` - Deletar pessoa
 
 ### Categorias
@@ -156,11 +157,8 @@ expense-manager/
 - `DELETE /api/categories/{id}` - Deletar categoria
 
 ### Transações
-- `GET /api/transaction` - Listar todas as transações
 - `GET /api/transactions` - Listar todas as transações
-- `POST /api/transaction` - Criar nova transação
 - `POST /api/transactions` - Criar nova transação
-- `DELETE /api/transaction/{id}` - Deletar transação
 - `DELETE /api/transactions/{id}` - Deletar transação
 
 ## 🎨 Recursos de UX/Acessibilidade
@@ -171,38 +169,19 @@ expense-manager/
 - **Validação em Tempo Real**: Feedback imediato em formulários
 - **Tratamento de Erros**: Mensagens de erro claras e amigáveis
 
-## 📝 Notas de Desenvolvimento
+---
 
-- As requisições são cacheadas via React Query com tempo de expiração de 1 minuto
-- O frontend desabilita refetch automático ao recuperar foco da janela para melhor performance
-- Validações de schema são feitas com Zod no frontend e backend
-- Material-UI trata nativamente muitos aspectos de acessibilidade
+<div align="center">
 
-## 🐛 Troubleshooting
+## 👨‍💻 Desenvolvido por
 
-### Docker não inicia
-```bash
-docker-compose down
-docker-compose up -d
-```
+**Rodrigo de Souza Fernandes**
 
-### Porta 5280 já está em uso
-Modifique a porta em `Properties/launchSettings.json` no backend
-
-### Porta 5173 já está em uso
-```bash
-npm run dev -- --port 3000
-```
-
-### Banco de dados não inicializa
-Aguarde 30 segundos após `docker-compose up -d` para que o SQL Server esteja pronto
-
-## 🤝 Contribuindo
-
-Sinta-se livre para abrir issues e pull requests para melhorias e correções de bugs.
-
-## 📄 Licença
-
-Este projeto é fornecido como está, sem licença específica.
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/rodrigo-de-souza-fernandes/)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/rodrigoDeSouzaFernandes)
 
 ---
+
+<sub>© 2026 Expense Manager. Todos os direitos reservados.</sub>
+
+</div>
