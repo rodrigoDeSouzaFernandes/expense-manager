@@ -148,17 +148,20 @@ expense-manager/
 ## 🔌 Endpoints da API
 
 ### Pessoas
+
 - `GET /api/people` - Listar todas as pessoas
 - `GET /api/people/{id}` - Obter pessoa por ID
 - `POST /api/people` - Criar nova pessoa
 - `DELETE /api/people/{id}` - Deletar pessoa
 
 ### Categorias
+
 - `GET /api/categories` - Listar todas as categorias
 - `POST /api/categories` - Criar nova categoria
 - `DELETE /api/categories/{id}` - Deletar categoria
 
 ### Transações
+
 - `GET /api/transactions` - Listar todas as transações
 - `POST /api/transactions` - Criar nova transação
 - `DELETE /api/transactions/{id}` - Deletar transação
@@ -170,6 +173,17 @@ expense-manager/
 - **Acessibilidade (a11y)**: Componentes MUI com suporte a leitores de tela
 - **Validação em Tempo Real**: Feedback imediato em formulários
 - **Tratamento de Erros**: Mensagens de erro claras e amigáveis
+
+## Possíveis Melhorias
+
+- [ ] **Testes Unitários** - Implementar testes com xUnit (backend) e Vitest (frontend)
+- [ ] **Autenticação e Autorização** - Sistema de login/logout com JWT e roles de usuário
+- [ ] **Data de Nascimento** - Substituir campo "idade" por data de nascimento com cálculo automático
+- [ ] **Data da Transação** - Permitir ao usuário definir data customizada para transações (atualmente usa data atual)
+- [ ] **Filtros e Paginação** - Filtros avançados nas listas (por data, categoria, pessoa)
+- [ ] **Soft Delete** - Implementar exclusão lógica em vez de física
+- [ ] **Auditoria** - Log de alterações (who, when, what) em transações e categorias
+- [ ] **Internacionalização (i18n)** - Suporte a múltiplos idiomas
 
 ---
 
