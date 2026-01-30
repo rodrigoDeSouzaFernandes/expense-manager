@@ -36,16 +36,13 @@ export const TransactionsList = () => {
       {isTransactionsListLoading ? (
         <TableSkeleton columns={6} rows={5} />
       ) : (
-        <DataGrid
-          autoHeight
-          rows={transactions || []}
-          columns={gridColumns}
-          disableColumnMenu
-          disableColumnResize
-          hideFooter
-          showToolbar
-          disableColumnFilter
-        />
+        <Box
+          sx={{
+            height: { xs: "calc(100vh - 86px)", sm: "calc(100vh - 180px)" },
+          }}
+        >
+          <DataGrid rows={transactions || []} columns={gridColumns} />
+        </Box>
       )}
 
       <CreateTransactionDialog

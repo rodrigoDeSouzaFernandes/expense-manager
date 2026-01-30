@@ -52,7 +52,13 @@ export const PersonDetails = () => {
       ) : (
         <>
           <TotalsDashboard {...totals} />
-          <DataGrid rows={transactions || []} columns={gridColumns} />
+          <Box
+            sx={{
+              height: { xs: "calc(100vh - 86px)", sm: "calc(100vh - 300px)" },
+            }}
+          >
+            <DataGrid rows={transactions || []} columns={gridColumns} />
+          </Box>
         </>
       )}
 

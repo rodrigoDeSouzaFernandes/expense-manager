@@ -42,16 +42,13 @@ export const CategoriesList = () => {
       {isCategoriesLoading ? (
         <TableSkeleton columns={3} rows={5} />
       ) : (
-        <DataGrid
-          autoHeight
-          rows={categories || []}
-          columns={gridColumns}
-          disableColumnMenu
-          disableColumnResize
-          hideFooter
-          showToolbar
-          disableColumnFilter
-        />
+        <Box
+          sx={{
+            height: { xs: "calc(100vh - 86px)", sm: "calc(100vh - 180px)" },
+          }}
+        >
+          <DataGrid rows={categories || []} columns={gridColumns} />
+        </Box>
       )}
 
       <CreateCategoryDialog

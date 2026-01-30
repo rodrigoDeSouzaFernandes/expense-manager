@@ -9,7 +9,7 @@ const baseTheme: ThemeOptions = {
     components: {
         MuiDataGrid: {
             defaultProps: {
-                autoHeight: true,
+                rowHeight: 52,
                 disableColumnMenu: true,
                 disableColumnResize: true,
                 disableColumnFilter: true,

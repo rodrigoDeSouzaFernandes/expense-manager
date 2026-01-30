@@ -49,16 +49,23 @@ export const PeopleList = () => {
       ) : (
         <>
           <TotalsDashboard {...totals} />
-          <DataGrid
-            rows={people || []}
-            columns={columns}
-            onRowClick={(params) => navigate(`/pessoas/${params.row.id}`)}
+          <Box
             sx={{
-              "& .MuiDataGrid-row": {
-                cursor: "pointer",
-              },
+              height: { xs: "calc(100vh - 86px)", sm: "calc(100vh - 300px)" },
             }}
-          />
+          >
+            <DataGrid
+              rows={people || []}
+              columns={columns}
+              onRowClick={(params) => navigate(`/pessoas/${params.row.id}`)}
+              sx={{
+                flex: 0,
+                "& .MuiDataGrid-row": {
+                  cursor: "pointer",
+                },
+              }}
+            />
+          </Box>
         </>
       )}
 
