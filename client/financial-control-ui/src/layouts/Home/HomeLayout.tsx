@@ -2,37 +2,32 @@ import { Box, Toolbar } from "@mui/material";
 import PeopleIcon from "@mui/icons-material/People";
 import CategoryIcon from "@mui/icons-material/Category";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
-import { useState } from "react";
-import { PeopleList } from "../../features/people/PeopleList";
-import { CategoriesList } from "../../features/categories/CategoriesList";
-import { TransactionsList } from "../../features/transactions/TransactionsList";
-import { SidebarNavigation } from "../../components/SidebarNavigation";
-import type { SidebarTab, TabConfig } from "./types";
+import { SidebarNavigation } from "@/components/SidebarNavigation";
 import Header from "@/components/Header";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-const TABS: TabConfig[] = [
-  { id: "people", label: "Pessoas", icon: <PeopleIcon /> },
-  { id: "categories", label: "Categorias", icon: <CategoryIcon /> },
-  { id: "transactions", label: "Transações", icon: <ReceiptLongIcon /> },
+const TABS = [
+  { id: "pessoas", label: "Pessoas", icon: <PeopleIcon /> },
+  { id: "categorias", label: "Categorias", icon: <CategoryIcon /> },
+  { id: "transacoes", label: "Transações", icon: <ReceiptLongIcon /> },
 ];
 
-const Home = () => {
-  const [activeTab, setActiveTab] = useState<SidebarTab>("people");
+const HomeLayout = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const tabs = {
-    people: <PeopleList />,
-    categories: <CategoriesList />,
-    transactions: <TransactionsList />,
-  };
+  const activeTab = location.pathname.replace("/", "") || "pessoas";
 
   return (
     <Box sx={{ display: "flex" }}>
       <Header toggleSidebar={() => setMobileOpen((prev) => !prev)} />
+
       <SidebarNavigation
         items={TABS}
         activeId={activeTab}
-        onChange={(id) => setActiveTab(id as SidebarTab)}
+        onChange={(id) => navigate(`/${id}`)}
         mobileOpen={mobileOpen}
         onMobileClose={() => setMobileOpen(false)}
       />
@@ -50,11 +45,11 @@ const Home = () => {
       >
         <Toolbar />
         <Box sx={{ p: { xs: 1, sm: 3 }, maxWidth: 1200, mx: "auto" }}>
-          {tabs[activeTab]}
+          <Outlet />
         </Box>
       </Box>
     </Box>
   );
 };
 
-export default Home;
+export default HomeLayout;
