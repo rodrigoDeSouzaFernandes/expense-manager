@@ -46,15 +46,9 @@ export const PeopleList = () => {
         <TableSkeleton columns={4} rows={5} />
       ) : (
         <DataGrid
-          autoHeight
           rows={people || []}
           getRowId={(row) => row.id}
           columns={columns}
-          disableColumnMenu
-          disableColumnResize
-          hideFooter
-          showToolbar
-          disableColumnFilter
           onRowClick={(params) => navigate(`/pessoas/${params.row.id}`)}
           sx={{
             "& .MuiDataGrid-row": {

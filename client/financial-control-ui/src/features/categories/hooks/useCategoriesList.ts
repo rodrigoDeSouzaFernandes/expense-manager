@@ -10,6 +10,7 @@ import {
   type CategoryFormData,
   type CreateCategoryDTO,
 } from "../types";
+import { enqueueSnackbar } from "notistack";
 
 export const useCategoriesList = () => {
   const [createCategoryDialogOpen, setCreateCategoryDialogOpen] =
@@ -35,7 +36,11 @@ export const useCategoriesList = () => {
     createCategoryMutation(data as CreateCategoryDTO, {
       onSuccess: () => {
         setCreateCategoryDialogOpen(false);
+        enqueueSnackbar("Categoria criada com sucesso!", { variant: "success" })
       },
+      onError: (error) => {
+        enqueueSnackbar(error?.response?.data?.message || "Erro ao criar categoria. Tente novamente.", { variant: "error" });
+      }
     });
   };
 
@@ -46,6 +51,9 @@ export const useCategoriesList = () => {
       onSuccess: () => {
         setDeleteCategoryDialogProps({ open: false, category: null });
       },
+      onError: (error) => {
+        enqueueSnackbar(error?.response?.data?.message || "Erro ao deletar categoria. Tente novamente.", { variant: "error" });
+      }
     });
   };
 

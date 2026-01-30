@@ -26,7 +26,7 @@ export const usePersonDetailsQuery = (personId?: string) => {
 export const useCreatePersonMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Person, AxiosError, CreatePersonDTO>({
+  return useMutation<Person, AxiosError<{ message: string }>, CreatePersonDTO>({
     mutationFn: createPerson,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["people"] });
@@ -37,7 +37,7 @@ export const useCreatePersonMutation = () => {
 export const useDeletePersonMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  return useMutation<void, AxiosError<{ message: string }>, string>({
     mutationFn: deletePerson,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["people"] });

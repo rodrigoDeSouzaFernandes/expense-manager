@@ -9,21 +9,15 @@ const baseTheme: ThemeOptions = {
     components: {
         MuiDataGrid: {
             defaultProps: {
+                autoHeight: true,
                 disableColumnMenu: true,
                 disableColumnResize: true,
+                disableColumnFilter: true,
                 hideFooter: true,
                 showToolbar: true,
                 localeText: {
                     noRowsLabel: "Nenhum registro encontrado",
                     noResultsOverlayLabel: "Nenhum resultado encontrado",
-                },
-            },
-            styleOverrides: {
-                root: {
-                    border: "none",
-                },
-                row: {
-                    cursor: "pointer",
                 },
             },
         },

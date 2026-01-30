@@ -5,6 +5,7 @@ import {
   usePeopleListQuery,
 } from "../queries";
 import type { CreatePersonDTO, Person } from "../types";
+import { enqueueSnackbar } from "notistack";
 
 interface DeletePersonDialogState {
   open: boolean;
@@ -31,7 +32,12 @@ export const usePeopleList = () => {
     deletePersonMutation(deletePersonDialog.person.id, {
       onSuccess: () => {
         setDeletePersonDialog({ open: false, person: null });
+        enqueueSnackbar("Pessoa deletada com sucesso!", { variant: "success" });
+
       },
+      onError: (error) => {
+        enqueueSnackbar(error?.response?.data?.message || "Erro ao deletar pessoa. Tente novamente.", { variant: "error" });
+      }
     });
   }, [deletePersonDialog.person]);
 
@@ -42,7 +48,11 @@ export const usePeopleList = () => {
     createPersonMutation(data, {
       onSuccess: () => {
         setCreatePersonDialogOpen(false);
+        enqueueSnackbar("Pessoa cadastrada com sucesso!", { variant: 'success' })
       },
+      onError: (error) => {
+        enqueueSnackbar(error?.response?.data?.message || "Erro ao cadastrar pessoa. Tente novamente.", { variant: "error" });
+      }
     });
   };
 
