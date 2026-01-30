@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Net;
 using FinancialControl.Api.Exceptions;
 using FinancialControl.Api.Models.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinancialControl.Api.Middlewares
 {

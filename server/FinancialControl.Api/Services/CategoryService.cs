@@ -1,6 +1,8 @@
+using FinancialControl.Api.Exceptions;
 using FinancialControl.Api.Models.DTOs;
 using FinancialControl.Api.Models.Entities;
 using FinancialControl.Api.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinancialControl.Api.Services;
 
@@ -43,9 +45,18 @@ public class CategoryService : ICategoryService
 
     public async Task DeleteCategoryAsync(Guid id)
     {
-        var deleted = await _categoryRepository.DeleteAsync(id);
+        try
+        {
+            var deleted = await _categoryRepository.DeleteAsync(id);
 
-        if (!deleted)
-            throw new KeyNotFoundException("Categoria não encontrada com o ID informado.");
+            if (!deleted)
+                throw new KeyNotFoundException("Categoria não encontrada com o ID informado.");
+        }
+        catch (DbUpdateException)
+        {
+            throw new BusinessRuleException(
+                "Não é possível excluir a categoria porque existem transações vinculadas a ela."
+            );
+        }
     }
 }
