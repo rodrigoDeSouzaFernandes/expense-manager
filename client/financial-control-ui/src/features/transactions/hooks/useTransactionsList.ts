@@ -1,6 +1,7 @@
 import { formatDate } from "@/utils/date";
 import {
   useCreateTransactionMutation,
+  useDeleteTransactionMutation,
   useTransactionsListQuery,
 } from "../queries";
 import type { CreateTransactionDTO, DeleteTransactionDialogProps, TransactionFormData, TransactionRow, TransactionType } from "../types";
@@ -24,6 +25,9 @@ export const useTransactionsList = () => {
   const { mutate: createTransactionMutation, isPending: isCreationPending } =
     useCreateTransactionMutation();
 
+  const { mutate: deleteTransactionMutation, isPending: isDeletionPending } =
+    useDeleteTransactionMutation();
+
   const transactions: TransactionRow[] = useMemo(() => {
     if (!data) return [];
 
@@ -38,24 +42,6 @@ export const useTransactionsList = () => {
     }));
   }, [data]);
 
-  const createTransaction = (data: TransactionFormData) => {
-
-    const formattedData: CreateTransactionDTO = {
-      ...data,
-      type: Number(data.type) as TransactionType,
-      amount: Number(data.amount.replace(/\D/g, '')) / 100,
-    };
-
-    createTransactionMutation(formattedData, {
-      onSuccess: () => {
-        setCreateTransactionDialogOpen(false);
-        enqueueSnackbar("Transação criada com sucesso!", { variant: "success" });
-      },
-      onError: (error) => {
-        enqueueSnackbar(error?.response?.data?.message || "Erro ao criar transação. Tente novamente.", { variant: "error" });
-      }
-    });
-  }
 
   const openCreateTransactionDialog = () => {
     setCreateTransactionDialogOpen(true);
@@ -78,6 +64,45 @@ export const useTransactionsList = () => {
     })
   }
 
+  const createTransaction = (data: TransactionFormData) => {
+
+    const formattedData: CreateTransactionDTO = {
+      ...data,
+      type: Number(data.type) as TransactionType,
+      amount: Number(data.amount.replace(/\D/g, '')) / 100,
+    };
+
+    createTransactionMutation(formattedData, {
+      onSuccess: () => {
+        closeCreateTransactionDialog();
+        enqueueSnackbar("Transação criada com sucesso!", { variant: "success" });
+      },
+      onError: (error) => {
+        enqueueSnackbar(error?.response?.data?.message || "Erro ao criar transação. Tente novamente.", { variant: "error" });
+      }
+    });
+  }
+
+  const deleteTransaction = (): void => {
+    if (!deleteTransactionDialogProps.transaction?.id) {
+      enqueueSnackbar("Não foi possível deletar transação. Recarregue a página e tente novamente mais tarde.", { variant: "error" });
+      return;
+    };
+
+    deleteTransactionMutation(deleteTransactionDialogProps.transaction?.id, {
+      onSuccess: () => {
+        closeDeleteTransactionDialog();
+        enqueueSnackbar("Transação deletada com sucesso!", { variant: "success" });
+      },
+      onError: (error) => {
+        enqueueSnackbar(error?.response?.data?.message || "Erro ao deletar transação. Tente novamente.", { variant: "error" });
+      }
+    })
+  }
+
+
+
+
   return {
     transactions,
     isTransactionsListLoading,
@@ -88,6 +113,8 @@ export const useTransactionsList = () => {
     createTransactionDialogOpen,
     openDeleteTransactionDialog,
     closeDeleteTransactionDialog,
-    deleteTransactionDialogProps
+    deleteTransactionDialogProps,
+    deleteTransaction,
+    isDeletionPending
   };
 };

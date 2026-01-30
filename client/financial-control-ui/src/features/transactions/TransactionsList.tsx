@@ -20,6 +20,8 @@ export const TransactionsList = () => {
     closeDeleteTransactionDialog,
     deleteTransactionDialogProps,
     openDeleteTransactionDialog,
+    deleteTransaction,
+    isDeletionPending,
   } = useTransactionsList();
 
   const gridColumns = getTransactionGridColumns(openDeleteTransactionDialog);
@@ -55,9 +57,9 @@ export const TransactionsList = () => {
 
       <DeleteTransactionDialog
         {...deleteTransactionDialogProps}
-        onDelete={() => {}}
+        onDelete={deleteTransaction}
         onClose={closeDeleteTransactionDialog}
-        isLoading={false}
+        isLoading={isDeletionPending}
       />
     </Box>
   );

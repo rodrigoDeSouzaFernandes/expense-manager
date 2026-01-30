@@ -29,7 +29,10 @@ public class PersonRepository : IPersonRepository
 
     public async Task<Person?> GetByIdAsync(Guid id)
     {
-        return await _context.People.FirstOrDefaultAsync(p => p.Id == id);
+        return await _context
+            .People.Include(p => p.Transactions)
+            .ThenInclude(t => t.Category)
+            .FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public async Task<IEnumerable<Person>> GetAllAsync()

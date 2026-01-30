@@ -43,7 +43,12 @@ export const getPeopleGridColumns = (
     sortable: false,
     filterable: false,
     renderCell: (params) => (
-      <IconButton onClick={() => onDelete(params.row as Person)}>
+      <IconButton
+        onClick={(e) => {
+          e.stopPropagation();
+          onDelete(params.row as Person);
+        }}
+      >
         <Delete sx={{ "&:hover": { color: "error.main" } }} />
       </IconButton>
     ),

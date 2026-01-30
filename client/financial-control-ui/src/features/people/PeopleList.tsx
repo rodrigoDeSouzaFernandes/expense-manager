@@ -8,6 +8,7 @@ import { CreatePersonDialog } from "./CreatePersonDialog";
 import DeletePersonDialog from "./DeletePersonDialog";
 import { useMemo } from "react";
 import { getPeopleGridColumns } from "./grid/getPeopleGridColumns";
+import { useNavigate } from "react-router-dom";
 
 export const PeopleList = () => {
   const {
@@ -31,6 +32,8 @@ export const PeopleList = () => {
     [],
   );
 
+  const navigate = useNavigate();
+
   return (
     <Box>
       <PageHeader
@@ -52,6 +55,12 @@ export const PeopleList = () => {
           hideFooter
           showToolbar
           disableColumnFilter
+          onRowClick={(params) => navigate(`/pessoas/${params.row.id}`)}
+          sx={{
+            "& .MuiDataGrid-row": {
+              cursor: "pointer",
+            },
+          }}
         />
       )}
 

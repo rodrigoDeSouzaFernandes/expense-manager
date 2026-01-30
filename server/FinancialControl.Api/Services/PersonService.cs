@@ -28,9 +28,45 @@ public class PersonService : IPersonService
         return dto;
     }
 
-    public async Task<Person?> GetPersonByIdAsync(Guid id)
+    public async Task<PersonWithTransactionsResponseDto> GetPersonByIdAsync(Guid id)
     {
-        return await _personRepository.GetByIdAsync(id);
+        var person = await _personRepository.GetByIdAsync(id);
+
+        if (person == null)
+        {
+            throw new KeyNotFoundException("Pessoa não encontrada");
+        }
+
+        return new PersonWithTransactionsResponseDto
+        {
+            Id = person.Id,
+            Name = person.Name,
+            Age = person.Age,
+            Transactions = person
+                .Transactions.Select(t => new TransactionResponseDto
+                {
+                    Id = t.Id,
+                    Amount = t.Amount,
+                    Description = t.Description,
+                    Type = t.Type,
+                    Date = t.Date,
+
+                    Person = new PersonResponseDto
+                    {
+                        Id = person.Id,
+                        Name = person.Name,
+                        Age = person.Age,
+                    },
+
+                    Category = new CategoryResponseDto
+                    {
+                        Id = t.Category.Id,
+                        Name = t.Category.Name,
+                        Type = t.Category.Type,
+                    },
+                })
+                .ToList(),
+        };
     }
 
     public async Task<IEnumerable<PersonWithBalanceDto>> GetAllPeopleAsync()
