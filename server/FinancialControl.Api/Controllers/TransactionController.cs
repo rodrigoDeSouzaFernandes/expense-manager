@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
-public class TransactionController : ControllerBase
+public class TransactionsController : ControllerBase
 {
     private readonly ITransactionService _transactionService;
 
-    public TransactionController(ITransactionService transactionService)
+    public TransactionsController(ITransactionService transactionService)
     {
         _transactionService = transactionService;
     }

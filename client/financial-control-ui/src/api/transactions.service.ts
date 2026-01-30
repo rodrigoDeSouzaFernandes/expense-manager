@@ -5,19 +5,19 @@ import type {
 } from "@/features/transactions/types";
 
 export const getTransactions = async (): Promise<Transaction[]> => {
-  const response = await client.get<Transaction[]>("/transaction");
+  const response = await client.get<Transaction[]>("/transactions");
   return response.data;
 };
 
 export const createTransaction = async (
   transaction: CreateTransactionDTO,
 ): Promise<Transaction> => {
-  const response = await client.post<Transaction>("/transaction", transaction);
+  const response = await client.post<Transaction>("/transactions", transaction);
   return response.data;
 };
 
 export const deleteTransaction = async (
   transactionId: string,
 ): Promise<void> => {
-  await client.delete(`/transaction/${transactionId}`);
+  await client.delete(`/transactions/${transactionId}`);
 };

@@ -50,6 +50,8 @@ export const useCategoriesList = () => {
     deleteCategoryMutation(deleteCategoryDialogProps.category.id, {
       onSuccess: () => {
         setDeleteCategoryDialogProps({ open: false, category: null });
+        enqueueSnackbar("Categoria deletada com sucesso!", { variant: "success" })
+
       },
       onError: (error) => {
         enqueueSnackbar(error?.response?.data?.message || "Erro ao deletar categoria. Tente novamente.", { variant: "error" });

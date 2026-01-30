@@ -141,19 +141,27 @@ expense-manager/
 
 ### Pessoas
 - `GET /api/person` - Listar todas as pessoas
+### Pessoas
+- `GET /api/people` - Listar todas as pessoas
 - `GET /api/person/{id}` - Obter pessoa por ID
+- `GET /api/people/{id}` - Obter pessoa por ID
 - `POST /api/person` - Criar nova pessoa
+- `POST /api/people` - Criar nova pessoa
 - `DELETE /api/person/{id}` - Deletar pessoa
+- `DELETE /api/people/{id}` - Deletar pessoa
 
 ### Categorias
-- `GET /api/category` - Listar todas as categorias
-- `POST /api/category` - Criar nova categoria
-- `DELETE /api/category/{id}` - Deletar categoria
+- `GET /api/categories` - Listar todas as categorias
+- `POST /api/categories` - Criar nova categoria
+- `DELETE /api/categories/{id}` - Deletar categoria
 
 ### Transações
 - `GET /api/transaction` - Listar todas as transações
+- `GET /api/transactions` - Listar todas as transações
 - `POST /api/transaction` - Criar nova transação
+- `POST /api/transactions` - Criar nova transação
 - `DELETE /api/transaction/{id}` - Deletar transação
+- `DELETE /api/transactions/{id}` - Deletar transação
 
 ## 🎨 Recursos de UX/Acessibilidade
 

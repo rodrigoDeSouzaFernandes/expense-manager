@@ -38,7 +38,7 @@ const HomeLayout = () => {
       <Box
         component="main"
         sx={{
-          width: { xs:"100%", sm: "100%", md: "calc(100vw - 250px)" },
+          width: { xs:"100%", sm: "100%", md: "calc(100vw - 260px)" },
           bgcolor: (theme) =>
             theme.palette.mode === "light"
               ? "#f5f5f5"

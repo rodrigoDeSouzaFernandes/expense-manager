@@ -6,11 +6,11 @@ namespace FinancialControl.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PersonController : ControllerBase
+public class PeopleController : ControllerBase
 {
     private readonly IPersonService _personService;
 
-    public PersonController(IPersonService personService)
+    public PeopleController(IPersonService personService)
     {
         _personService = personService;
     }
