@@ -99,6 +99,6 @@ public class PersonService : IPersonService
         var deleted = await _personRepository.DeleteAsync(id);
 
         if (!deleted)
-            throw new KeyNotFoundException("Person not found with the provided ID.");
+            throw new KeyNotFoundException("Pessoa não encontrada com o ID informado.");
     }
 }

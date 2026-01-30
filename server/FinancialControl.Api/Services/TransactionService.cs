@@ -80,7 +80,7 @@ public class TransactionService : ITransactionService
 
         if (createdTransaction == null)
         {
-            throw new Exception("Failed to create transaction, try again later.");
+            throw new Exception("Falha ao criar transação, tente novamente mais tarde");
         }
 
         return new TransactionResponseDto
@@ -111,7 +111,7 @@ public class TransactionService : ITransactionService
 
         if (transaction == null)
         {
-            throw new KeyNotFoundException("Transaction not found");
+            throw new KeyNotFoundException("Transação não encontrada");
         }
 
         return new TransactionResponseDto
@@ -142,7 +142,7 @@ public class TransactionService : ITransactionService
 
         if (!deleted)
         {
-            throw new KeyNotFoundException("Transaction not found");
+            throw new KeyNotFoundException("Transação não encontrada");
         }
     }
 
@@ -151,13 +151,15 @@ public class TransactionService : ITransactionService
         if (person == null)
         {
             throw new BusinessRuleException(
-                "Person not found. Please verify that the provided ID is correct."
+                "Pessoa não encontrada. Por favor, verofique se o ID informado está correto."
             );
         }
 
         if (person.Age < 18 && transaction.Type == TransactionType.Credit)
         {
-            throw new BusinessRuleException("Minor persons cannot have income transactions.");
+            throw new BusinessRuleException(
+                "Menores de idade não podem registrar transações do tipo receita"
+            );
         }
     }
 
@@ -166,12 +168,14 @@ public class TransactionService : ITransactionService
         if (category == null)
         {
             throw new BusinessRuleException(
-                "Category not found. Please verify that the provided ID is correct."
+                "Categoria não encontrada, por favor, verifique o ID informado."
             );
         }
         if (category.Type != CategoryType.Both && (int)category.Type != (int)transaction.Type)
         {
-            throw new BusinessRuleException("Transaction type does not match category type.");
+            throw new BusinessRuleException(
+                "O tipo de transação não é permitido para a categoria selecionada."
+            );
         }
     }
 }

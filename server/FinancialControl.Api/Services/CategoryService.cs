@@ -46,6 +46,6 @@ public class CategoryService : ICategoryService
         var deleted = await _categoryRepository.DeleteAsync(id);
 
         if (!deleted)
-            throw new KeyNotFoundException("Category not found with the provided ID.");
+            throw new KeyNotFoundException("Categoria não encontrada com o ID informado.");
     }
 }
