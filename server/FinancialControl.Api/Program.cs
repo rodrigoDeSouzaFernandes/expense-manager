@@ -52,12 +52,4 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 
-app.MapGet(
-    "/test",
-    () =>
-    {
-        return new { Message = "Success" };
-    }
-);
-
 app.Run();
